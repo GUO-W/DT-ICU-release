@@ -1,5 +1,6 @@
 
 ## Directory
+```
 ROOT
 |-- data
     |-- mimiciv2.0
@@ -21,17 +22,17 @@ ROOT
     |-- checkpoints
     |-- logs
     '-- tensorboard 
-
+```
 ## Data Preparation
-for 2.0: Please follow the data preprocessing pipeline from [MIMIC-IV-Data-Pipeline]{https://github.com/healthylaife/MIMIC-IV-Data-Pipeline.git} and put the generated csv files in ./data/mimiciv2.0. (72h mordality extraction)
-for 3.1: please follow the data preprocessing pipeline from [mimic4_preprocess]https://github.com/14110951D0/mimic4_preprocess and put the generated csv files in ./data/mimiciv2.0.
++ for 2.0: Please follow the data preprocessing pipeline from [MIMIC-IV-Data-Pipeline]{https://github.com/healthylaife/MIMIC-IV-Data-Pipeline.git} and put the generated csv files in ./data/mimiciv2.0. (72h mordality extraction)
++ for 3.1: please follow the data preprocessing pipeline from [mimic4_preprocess]https://github.com/14110951D0/mimic4_preprocess and put the generated csv files in ./data/mimiciv2.0.
 
 ## Train and test
-Go to the experiment folder in ./exps, 
-bash run.sh
-note: checkpoints are not saved by default
++ Go to the experiment folder in ./exps, 
++ bash run.sh
++ note: checkpoints are not saved by default
 
 # log vis
-on leomed: use log_analyze.py, or log_analyze_diff_thres.py for diff classification thresholds.
-on other servers: setting up tensorboard is suggested.
++ on leomed: use log_analyze.py, or log_analyze_diff_thres.py for diff classification thresholds.
++ on other servers: setting up tensorboard is suggested.
 
