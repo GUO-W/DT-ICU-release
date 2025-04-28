@@ -4,7 +4,7 @@ import torch
 import pickle
 from typing import Optional
 from tqdm import tqdm
-
+import os
 
 def fix_seed(seed=42):
     random.seed(seed)
@@ -282,3 +282,14 @@ def init_read(root_dir):
         admVocabDict,
         icuVocabDict,
     )
+
+
+def save_checkpoint(model, optimizer, epoch, snapshot_dir):
+    os.makedirs(snapshot_dir, exist_ok=True)
+    save_path = os.path.join(snapshot_dir, f"snapshot_epoch{epoch}.pth")
+    torch.save({
+        'epoch': epoch,
+        'model_state_dict': model.state_dict(),
+        'optimizer_state_dict': optimizer.state_dict()
+    }, save_path)
+    print(f"Model saved to {save_path}")

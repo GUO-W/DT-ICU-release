@@ -29,13 +29,19 @@ lr / warm-up
 model: + causal transformer mask (todo: abla)
 pb: low precision
 + diff classification thres (todo: analyse)
+bce + f1
 
 ## exps_mimic31_balancedsampling_bceloss:
-loss bce -> bce + f1
+loss bce (todo: abla loss)
 oversampling 1:1 -> 2:1 (todo: abla test)
-+ log_ana_
-##
++ log_analyze_diff_thres.py
+test diff lr
 
+## exps_mimic31_itera
+config:  train_max_length = 480, lr1e-5, long-short thres = 72/48
+save model
++ pred + evaluation
+slides
 
 ## todo
 keep len>500 data

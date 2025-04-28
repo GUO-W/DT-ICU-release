@@ -56,7 +56,7 @@ C.med_flag = True
 C.date_flag = True
 C.ing_flag = True
 C.oversampling = False
-C.long_short_threshold = 50
+C.long_short_threshold = 48
 
 """ Train and Test Config"""
 C.seed = 42
@@ -69,7 +69,7 @@ C.patience = 5
 C.num_workers = 20
 
 C.train_min_length = 4 # 72
-C.train_max_length = 500
+C.train_max_length = 480
 
 C.lrn_rate = 5e-7 #1e-5
 C.warmup_epochs = 2
@@ -82,7 +82,8 @@ C.val_size = 0.1
 """ Model Config"""
 C.model = edict()
 
-C.model.pred = False
+C.model.pred = True
+C.model.pred_loss = 0.5
 C.model.posemb = True # False
 
 C.model.embedding_size = 64

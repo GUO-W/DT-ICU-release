@@ -7,6 +7,7 @@ from sklearn import metrics
 import matplotlib.pyplot as plt
 import numpy as np
 import sys
+from config import cfg
 
 # Ensure output directory exists
 if not os.path.exists("./data/output"):
@@ -18,6 +19,7 @@ class Loss(nn.Module):
     def __init__(self, device):
         super(Loss, self).__init__()
         self.classify_loss = nn.BCELoss()  # Only BCELoss is kept
+        self.l2_loss = nn.MSELoss()
         self.device = device
         self.acc = True
         self.ppv = True
@@ -31,9 +33,9 @@ class Loss(nn.Module):
         self.callb = True
         self.callbPlot = False
 
-    def forward(self, prob, labels, train=True, mode="train", threshold=0.5):
+    def forward(self, prob, labels, preds=None, gt_preds=None, train=True, mode="train", threshold=0.5):
         # Initialize variables
-        auc, apr, base, accur, prec, recall, spec, npv_val, ECE, MCE = 'NA', 'NA', 'NA', 'NA', 'NA', 'NA', 'NA', 'NA', 'NA', 'NA'
+        auc, apr, base, accur, prec, recall, spec, npv_val, ECE, MCE, pred_loss = 'NA', 'NA', 'NA', 'NA', 'NA', 'NA', 'NA', 'NA', 'NA', 'NA', 'NA'
 
         prob = prob.float().to(self.device)
         labels = labels.float().to(self.device)
@@ -91,9 +93,19 @@ class Loss(nn.Module):
         if self.callb:
             ECE, MCE = self.calb_metrics(prob_np, labels_np, self.callbPlot)
 
+        #################           pred loss           #######################
+        if preds is not None and gt_preds is not None:
+            pred_loss = 0.0
+            for pred, gt_pred in zip(preds, gt_preds):
+                pred_loss += self.l2_loss(pred, gt_pred)
+            total_loss = classify_loss + pred_loss * cfg.model.pred_loss
+
         # Output the results
         print("Mode: ", mode)
         print("BCE Loss: {:.2f}".format(classify_loss))
+        if preds is not None and gt_preds is not None:
+            print("PRED Loss: {:.2f}".format(pred_loss))
+            print("Total Loss: {:.2f}".format(total_loss))
         print("AU-ROC: {:.2f}".format(auc))
         print("AU-PRC: {:.2f}".format(apr))
         print("AU-PRC Baseline: {:.2f}".format(base))

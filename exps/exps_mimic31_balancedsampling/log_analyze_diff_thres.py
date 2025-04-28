@@ -158,8 +158,7 @@ def plot_metrics(experiments, METRICS):
 if __name__ == '__main__':
     METRICS = ['BCE Loss', 'AU-ROC', 'AU-PRC', 'Accuracy', 'Precision', 'Recall']
     log_settings = [
-        {'file': 'log_oversampling_bz16_lr1e-5_bceloss.txt', 'thresholds': 'all'}, # recall vs precision -- choose recall --thres=0.5
-        {'file': 'log_oversampling_bz16_lr5e-7_bceloss.txt', 'thresholds': [0.5]},
+        {'file': 'log_oversampling_bz16_lr1e-5.txt', 'thresholds': [0.5]}, #'all'}, # recall vs precision -- choose recall --thres=0.5
         #{'file': 'log_test.txt', 'thresholds': [0.8]}
     ]
     experiments = {}
