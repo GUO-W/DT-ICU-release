@@ -559,3 +559,5 @@ def load_trainval_data():
     val_ids = pd.read_csv(cfg.root_dir +  "/data/mimiciv3.1/train_test_val_split/val_ids.csv", header=0)
     val_ids = val_ids.iloc[:, :2].values.tolist()
     return train_ids, val_ids, test_ids, labels
+
+

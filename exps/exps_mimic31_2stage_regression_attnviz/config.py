@@ -71,7 +71,7 @@ C.num_workers = 20
 C.train_min_length = 4 # 72
 C.train_max_length = 480
 
-C.lrn_rate = 5e-7 #1e-5
+C.lrn_rate = 2e-5
 C.warmup_epochs = 2
 C.grad_accum_steps = 16
 

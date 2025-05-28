@@ -109,8 +109,6 @@ class DTmodel(nn.Module): # Transformer our model v1.0
         shapes = torch.cumsum(shapes, dim=0)
         means = [self.med_mean, self.chart_mean, self.out_mean, self.proc_mean, self.date_mean, self.ing_mean]
         stds = [self.med_std, self.chart_std, self.out_std, self.proc_std, self.date_std, self.ing_std]
-        print("means", means)
-        print("stds", stds)
         outputs = []
         for i in range(len(shapes) - 1):
             ins = pred[:, shapes[i] : shapes[i+1]].unsqueeze(1)

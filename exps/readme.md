@@ -42,6 +42,33 @@ config:  train_max_length = 480, lr1e-5, long-short thres = 72/48
 save model
 + pred + evaluation
 slides
++ TODO : + self-att (+ weight analy)
+
+## exps_mimic31_itera_sepdyn [todo]
+2025.05.20
+dataset_util.py 
+dynamic -> regression + multi class classdication + binary classification
+regression just for partial events
+Further: re-ornagize the input events/study the meaning and build up countrafactual, group the events (+ contra anay)
+
+## exps_mimic31_2stage_regression
+2025.05.25
+vs _itera）precision: from <1 to 90+
+## exps_mimic31_2stage_regression_newloss
+2025.05.25
++log/loss
+## exps_mimic31_2stage_regression_attnviz 
+2025.05.25
++ data_sparsity_diff_mode_analy.py （from exps_mimic31_itera_sepdyn/dataset_util.py） analyse sparsity under different mode
++ exps_mimic_mordality/data_analy_sparsity.py compare sparsity of new preprocessing vs previous preprocessing
+[TODO] test mordality updates in iterative inference
+[TODO] analyze weight metrix (+gcn)
+
+
+
+
+
+
 
 ## todo
 keep len>500 data

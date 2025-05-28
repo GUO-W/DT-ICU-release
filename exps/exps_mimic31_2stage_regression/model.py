@@ -39,10 +39,10 @@ class DTmodel(nn.Module): # Transformer our model v1.0
         self.pred_size = 0
         self.norm_data = norm_data
 
-        if self.med_vocab_size:
-            self.med = nn.Linear(self.med_vocab_size, self.latent_size)
-            self.atten_embed_size += self.latent_size
-            self.pred_size += self.med_vocab_size
+        # if self.med_vocab_size:
+        #     self.med = nn.Linear(self.med_vocab_size, self.latent_size)
+        #     self.atten_embed_size += self.latent_size
+        #     self.pred_size += self.med_vocab_size
         if self.chart_vocab_size:
             self.chart = nn.Linear(self.chart_vocab_size, self.latent_size)
             self.atten_embed_size += self.latent_size
@@ -51,18 +51,18 @@ class DTmodel(nn.Module): # Transformer our model v1.0
             self.out = nn.Linear(self.out_vocab_size, self.latent_size)
             self.atten_embed_size += self.latent_size
             self.pred_size += self.out_vocab_size
-        if self.proc_vocab_size:
-            self.proc = nn.Linear(self.proc_vocab_size, self.latent_size)
-            self.atten_embed_size += self.latent_size
-            self.pred_size += self.proc_vocab_size
-        if self.date_vocab_size:
-            self.date = nn.Linear(self.date_vocab_size, self.latent_size)
-            self.atten_embed_size += self.latent_size
-            self.pred_size += self.date_vocab_size
-        if self.ing_vocab_size:
-            self.ing = nn.Linear(self.ing_vocab_size, self.latent_size)
-            self.atten_embed_size += self.latent_size
-            self.pred_size += self.ing_vocab_size
+        # if self.proc_vocab_size:
+        #     self.proc = nn.Linear(self.proc_vocab_size, self.latent_size)
+        #     self.atten_embed_size += self.latent_size
+        #     self.pred_size += self.proc_vocab_size
+        # if self.date_vocab_size:
+        #     self.date = nn.Linear(self.date_vocab_size, self.latent_size)
+        #     self.atten_embed_size += self.latent_size
+        #     self.pred_size += self.date_vocab_size
+        # if self.ing_vocab_size:
+        #     self.ing = nn.Linear(self.ing_vocab_size, self.latent_size)
+        #     self.atten_embed_size += self.latent_size
+        #     self.pred_size += self.ing_vocab_size
         if self.stat_vocab_size:
             self.stat = nn.Linear(self.stat_vocab_size, self.latent_size)
             self.cross_embed_size += self.latent_size
@@ -105,12 +105,10 @@ class DTmodel(nn.Module): # Transformer our model v1.0
         self.stat_std = std["stat"]
 
     def reshape_pred(self, pred):
-        shapes = torch.tensor([0, self.med_vocab_size, self.chart_vocab_size, self.out_vocab_size, self.proc_vocab_size, self.date_vocab_size, self.ing_vocab_size])
+        shapes = torch.tensor([0, self.chart_vocab_size, self.out_vocab_size])
         shapes = torch.cumsum(shapes, dim=0)
         means = [self.med_mean, self.chart_mean, self.out_mean, self.proc_mean, self.date_mean, self.ing_mean]
         stds = [self.med_std, self.chart_std, self.out_std, self.proc_std, self.date_std, self.ing_std]
-        print("means", means)
-        print("stds", stds)
         outputs = []
         for i in range(len(shapes) - 1):
             ins = pred[:, shapes[i] : shapes[i+1]].unsqueeze(1)
