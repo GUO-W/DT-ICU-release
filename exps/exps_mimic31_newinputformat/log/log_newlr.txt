@@ -1,0 +1,1635 @@
+seed: 42
+Config:
+abs_dir: /cluster/home/guowen/projs/DT_mimic/exps/exps_mimic31_newinputformat
+this_dir: exps_mimic31_newinputformat
+repo_name: DT_mimic
+root_dir: /cluster/home/guowen/projs/DT_mimic
+out_dir: /cluster/home/guowen/projs/DT_mimic/out/exps_mimic31_newinputformat
+log_dir: /cluster/home/guowen/projs/DT_mimic/out/exps_mimic31_newinputformat/log
+snapshot_dir: /cluster/home/guowen/projs/DT_mimic/out/exps_mimic31_newinputformat/snapshot
+tensorboard_dir: /cluster/home/guowen/projs/DT_mimic/out/exps_mimic31_newinputformat/tensorboard
+device: cuda:0
+data_icu: True
+proc_flag: True
+out_flag: True
+chart_flag: True
+med_flag: True
+date_flag: True
+ing_flag: True
+oversampling: False
+long_short_threshold: 48
+seed: 42
+k_fold: 5
+batch_size: 1
+test_batch_size: 1
+num_epochs: 20
+patience: 5
+num_workers: 20
+train_min_length: 4
+train_max_length: 96
+lrn_rate: 1e-05
+warmup_epochs: 2
+grad_accum_steps: 50
+test_input_min_length: 12
+test_pos_threshold: 0.4
+test_max_pred_length_ratio: 2.0
+test_size: 0.2
+val_size: 0.1
+model: {'pred': True, 'pred_loss': 0.5, 'posemb': True, 'embedding_size': 64, 'latent_size': 256, 'rnnLayers': 2, 'rnn_size': 256}
+model poseembed: True
+model pred: True
+total modalities: 6
+Total Samples 94458
+Positive Samples 7364
+Negative Samples 87094
+[12574949, 31423742]
+Building dataset for  train
+Building dataset for  val
+Building dataset for  test
+total: short neg 30242
+total: short pos 2174
+total: long neg 16760
+total: long pos 989
+======== Training ======
+lr: [1.0000000000000002e-06]
+======= EPOCH 0.0 ========
+class threshold: 0.5
+Mode:  train
+BCE Loss: 0.48
+AU-ROC: 0.81
+AU-PRC: 0.70
+AU-PRC Baseline: 0.33
+Accuracy: 0.76
+Precision: 0.71
+Recall: 0.46
+Specificity: 0.91
+NPV: 0.77
+ECE: 0.03
+MCE: 0.05
+class threshold: 0.55
+Mode:  train
+BCE Loss: 0.48
+AU-ROC: 0.81
+AU-PRC: 0.70
+AU-PRC Baseline: 0.33
+Accuracy: 0.75
+Precision: 0.74
+Recall: 0.40
+Specificity: 0.93
+NPV: 0.76
+ECE: 0.03
+MCE: 0.05
+class threshold: 0.6
+Mode:  train
+BCE Loss: 0.48
+AU-ROC: 0.81
+AU-PRC: 0.70
+AU-PRC Baseline: 0.33
+Accuracy: 0.75
+Precision: 0.77
+Recall: 0.35
+Specificity: 0.95
+NPV: 0.74
+ECE: 0.03
+MCE: 0.05
+class threshold: 0.65
+Mode:  train
+BCE Loss: 0.48
+AU-ROC: 0.81
+AU-PRC: 0.70
+AU-PRC Baseline: 0.33
+Accuracy: 0.75
+Precision: 0.80
+Recall: 0.31
+Specificity: 0.96
+NPV: 0.74
+ECE: 0.03
+MCE: 0.05
+class threshold: 0.7
+Mode:  train
+BCE Loss: 0.48
+AU-ROC: 0.81
+AU-PRC: 0.70
+AU-PRC Baseline: 0.33
+Accuracy: 0.74
+Precision: 0.84
+Recall: 0.27
+Specificity: 0.97
+NPV: 0.73
+ECE: 0.03
+MCE: 0.05
+class threshold: 0.75
+Mode:  train
+BCE Loss: 0.48
+AU-ROC: 0.81
+AU-PRC: 0.70
+AU-PRC Baseline: 0.33
+Accuracy: 0.73
+Precision: 0.88
+Recall: 0.22
+Specificity: 0.98
+NPV: 0.72
+ECE: 0.03
+MCE: 0.05
+class threshold: 0.8
+Mode:  train
+BCE Loss: 0.48
+AU-ROC: 0.81
+AU-PRC: 0.70
+AU-PRC Baseline: 0.33
+Accuracy: 0.72
+Precision: 0.91
+Recall: 0.18
+Specificity: 0.99
+NPV: 0.71
+ECE: 0.03
+MCE: 0.05
+class threshold: 0.85
+Mode:  train
+BCE Loss: 0.48
+AU-ROC: 0.81
+AU-PRC: 0.70
+AU-PRC Baseline: 0.33
+Accuracy: 0.71
+Precision: 0.93
+Recall: 0.13
+Specificity: 1.00
+NPV: 0.70
+ECE: 0.03
+MCE: 0.05
+class threshold: 0.8999999999999999
+Mode:  train
+BCE Loss: 0.48
+AU-ROC: 0.81
+AU-PRC: 0.70
+AU-PRC Baseline: 0.33
+Accuracy: 0.69
+Precision: 0.96
+Recall: 0.07
+Specificity: 1.00
+NPV: 0.68
+ECE: 0.03
+MCE: 0.05
+class threshold: 0.95
+Mode:  train
+BCE Loss: 0.48
+AU-ROC: 0.81
+AU-PRC: 0.70
+AU-PRC Baseline: 0.33
+Accuracy: 0.67
+Precision: 0.98
+Recall: 0.02
+Specificity: 1.00
+NPV: 0.67
+ECE: 0.03
+MCE: 0.05
+======= VALIDATION ========
+class threshold: 0.5
+Mode:  train
+BCE Loss: 0.25
+AU-ROC: 0.93
+AU-PRC: 0.58
+AU-PRC Baseline: 0.05
+Accuracy: 0.89
+Precision: 0.30
+Recall: 0.83
+Specificity: 0.89
+NPV: 0.99
+ECE: 0.14
+MCE: 0.58
+class threshold: 0.55
+Mode:  train
+BCE Loss: 0.25
+AU-ROC: 0.93
+AU-PRC: 0.58
+AU-PRC Baseline: 0.05
+Accuracy: 0.90
+Precision: 0.32
+Recall: 0.81
+Specificity: 0.91
+NPV: 0.99
+ECE: 0.14
+MCE: 0.58
+class threshold: 0.6
+Mode:  train
+BCE Loss: 0.25
+AU-ROC: 0.93
+AU-PRC: 0.58
+AU-PRC Baseline: 0.05
+Accuracy: 0.91
+Precision: 0.35
+Recall: 0.78
+Specificity: 0.92
+NPV: 0.99
+ECE: 0.14
+MCE: 0.58
+class threshold: 0.65
+Mode:  train
+BCE Loss: 0.25
+AU-ROC: 0.93
+AU-PRC: 0.58
+AU-PRC Baseline: 0.05
+Accuracy: 0.92
+Precision: 0.38
+Recall: 0.76
+Specificity: 0.93
+NPV: 0.99
+ECE: 0.14
+MCE: 0.58
+class threshold: 0.7
+Mode:  train
+BCE Loss: 0.25
+AU-ROC: 0.93
+AU-PRC: 0.58
+AU-PRC Baseline: 0.05
+Accuracy: 0.93
+Precision: 0.42
+Recall: 0.73
+Specificity: 0.95
+NPV: 0.98
+ECE: 0.14
+MCE: 0.58
+class threshold: 0.75
+Mode:  train
+BCE Loss: 0.25
+AU-ROC: 0.93
+AU-PRC: 0.58
+AU-PRC Baseline: 0.05
+Accuracy: 0.95
+Precision: 0.48
+Recall: 0.70
+Specificity: 0.96
+NPV: 0.98
+ECE: 0.14
+MCE: 0.58
+class threshold: 0.8
+Mode:  train
+BCE Loss: 0.25
+AU-ROC: 0.93
+AU-PRC: 0.58
+AU-PRC Baseline: 0.05
+Accuracy: 0.95
+Precision: 0.55
+Recall: 0.64
+Specificity: 0.97
+NPV: 0.98
+ECE: 0.14
+MCE: 0.58
+class threshold: 0.85
+Mode:  train
+BCE Loss: 0.25
+AU-ROC: 0.93
+AU-PRC: 0.58
+AU-PRC Baseline: 0.05
+Accuracy: 0.96
+Precision: 0.62
+Recall: 0.56
+Specificity: 0.98
+NPV: 0.98
+ECE: 0.14
+MCE: 0.58
+class threshold: 0.8999999999999999
+Mode:  train
+BCE Loss: 0.25
+AU-ROC: 0.93
+AU-PRC: 0.58
+AU-PRC Baseline: 0.05
+Accuracy: 0.96
+Precision: 0.70
+Recall: 0.43
+Specificity: 0.99
+NPV: 0.97
+ECE: 0.14
+MCE: 0.58
+class threshold: 0.95
+Mode:  train
+BCE Loss: 0.25
+AU-ROC: 0.93
+AU-PRC: 0.58
+AU-PRC Baseline: 0.05
+Accuracy: 0.96
+Precision: 0.77
+Recall: 0.19
+Specificity: 1.00
+NPV: 0.96
+ECE: 0.14
+MCE: 0.58
+======= TESTING ========
+class threshold: 0.5
+Mode:  train
+BCE Loss: 0.25
+AU-ROC: 0.93
+AU-PRC: 0.58
+AU-PRC Baseline: 0.05
+Accuracy: 0.89
+Precision: 0.30
+Recall: 0.85
+Specificity: 0.90
+NPV: 0.99
+ECE: 0.14
+MCE: 0.56
+class threshold: 0.55
+Mode:  train
+BCE Loss: 0.25
+AU-ROC: 0.93
+AU-PRC: 0.58
+AU-PRC Baseline: 0.05
+Accuracy: 0.90
+Precision: 0.32
+Recall: 0.82
+Specificity: 0.91
+NPV: 0.99
+ECE: 0.14
+MCE: 0.56
+class threshold: 0.6
+Mode:  train
+BCE Loss: 0.25
+AU-ROC: 0.93
+AU-PRC: 0.58
+AU-PRC Baseline: 0.05
+Accuracy: 0.91
+Precision: 0.35
+Recall: 0.80
+Specificity: 0.92
+NPV: 0.99
+ECE: 0.14
+MCE: 0.56
+class threshold: 0.65
+Mode:  train
+BCE Loss: 0.25
+AU-ROC: 0.93
+AU-PRC: 0.58
+AU-PRC Baseline: 0.05
+Accuracy: 0.92
+Precision: 0.38
+Recall: 0.78
+Specificity: 0.93
+NPV: 0.99
+ECE: 0.14
+MCE: 0.56
+class threshold: 0.7
+Mode:  train
+BCE Loss: 0.25
+AU-ROC: 0.93
+AU-PRC: 0.58
+AU-PRC Baseline: 0.05
+Accuracy: 0.93
+Precision: 0.42
+Recall: 0.76
+Specificity: 0.94
+NPV: 0.99
+ECE: 0.14
+MCE: 0.56
+class threshold: 0.75
+Mode:  train
+BCE Loss: 0.25
+AU-ROC: 0.93
+AU-PRC: 0.58
+AU-PRC Baseline: 0.05
+Accuracy: 0.94
+Precision: 0.46
+Recall: 0.71
+Specificity: 0.95
+NPV: 0.98
+ECE: 0.14
+MCE: 0.56
+class threshold: 0.8
+Mode:  train
+BCE Loss: 0.25
+AU-ROC: 0.93
+AU-PRC: 0.58
+AU-PRC Baseline: 0.05
+Accuracy: 0.95
+Precision: 0.52
+Recall: 0.65
+Specificity: 0.97
+NPV: 0.98
+ECE: 0.14
+MCE: 0.56
+class threshold: 0.85
+Mode:  train
+BCE Loss: 0.25
+AU-ROC: 0.93
+AU-PRC: 0.58
+AU-PRC Baseline: 0.05
+Accuracy: 0.96
+Precision: 0.57
+Recall: 0.55
+Specificity: 0.98
+NPV: 0.98
+ECE: 0.14
+MCE: 0.56
+class threshold: 0.8999999999999999
+Mode:  train
+BCE Loss: 0.25
+AU-ROC: 0.93
+AU-PRC: 0.58
+AU-PRC Baseline: 0.05
+Accuracy: 0.96
+Precision: 0.65
+Recall: 0.41
+Specificity: 0.99
+NPV: 0.97
+ECE: 0.14
+MCE: 0.56
+class threshold: 0.95
+Mode:  train
+BCE Loss: 0.25
+AU-ROC: 0.93
+AU-PRC: 0.58
+AU-PRC Baseline: 0.05
+Accuracy: 0.96
+Precision: 0.83
+Recall: 0.19
+Specificity: 1.00
+NPV: 0.96
+ECE: 0.14
+MCE: 0.56
+Model saved to /cluster/home/guowen/projs/DT_mimic/out/exps_mimic31_newinputformat/snapshot/snapshot_epoch0.pth
+lr: [5.499999999999961e-06]
+======= EPOCH 1.0 ========
+class threshold: 0.5
+Mode:  train
+BCE Loss: 0.22
+AU-ROC: 0.96
+AU-PRC: 0.93
+AU-PRC Baseline: 0.33
+Accuracy: 0.91
+Precision: 0.88
+Recall: 0.85
+Specificity: 0.94
+NPV: 0.93
+ECE: 0.01
+MCE: 0.03
+class threshold: 0.55
+Mode:  train
+BCE Loss: 0.22
+AU-ROC: 0.96
+AU-PRC: 0.93
+AU-PRC Baseline: 0.33
+Accuracy: 0.91
+Precision: 0.89
+Recall: 0.84
+Specificity: 0.95
+NPV: 0.92
+ECE: 0.01
+MCE: 0.03
+class threshold: 0.6
+Mode:  train
+BCE Loss: 0.22
+AU-ROC: 0.96
+AU-PRC: 0.93
+AU-PRC Baseline: 0.33
+Accuracy: 0.91
+Precision: 0.91
+Recall: 0.82
+Specificity: 0.96
+NPV: 0.92
+ECE: 0.01
+MCE: 0.03
+class threshold: 0.65
+Mode:  train
+BCE Loss: 0.22
+AU-ROC: 0.96
+AU-PRC: 0.93
+AU-PRC Baseline: 0.33
+Accuracy: 0.91
+Precision: 0.92
+Recall: 0.81
+Specificity: 0.96
+NPV: 0.91
+ECE: 0.01
+MCE: 0.03
+class threshold: 0.7
+Mode:  train
+BCE Loss: 0.22
+AU-ROC: 0.96
+AU-PRC: 0.93
+AU-PRC Baseline: 0.33
+Accuracy: 0.91
+Precision: 0.93
+Recall: 0.78
+Specificity: 0.97
+NPV: 0.90
+ECE: 0.01
+MCE: 0.03
+class threshold: 0.75
+Mode:  train
+BCE Loss: 0.22
+AU-ROC: 0.96
+AU-PRC: 0.93
+AU-PRC Baseline: 0.33
+Accuracy: 0.90
+Precision: 0.94
+Recall: 0.75
+Specificity: 0.97
+NPV: 0.89
+ECE: 0.01
+MCE: 0.03
+class threshold: 0.8
+Mode:  train
+BCE Loss: 0.22
+AU-ROC: 0.96
+AU-PRC: 0.93
+AU-PRC Baseline: 0.33
+Accuracy: 0.89
+Precision: 0.95
+Recall: 0.71
+Specificity: 0.98
+NPV: 0.87
+ECE: 0.01
+MCE: 0.03
+class threshold: 0.85
+Mode:  train
+BCE Loss: 0.22
+AU-ROC: 0.96
+AU-PRC: 0.93
+AU-PRC Baseline: 0.33
+Accuracy: 0.88
+Precision: 0.96
+Recall: 0.66
+Specificity: 0.98
+NPV: 0.85
+ECE: 0.01
+MCE: 0.03
+class threshold: 0.8999999999999999
+Mode:  train
+BCE Loss: 0.22
+AU-ROC: 0.96
+AU-PRC: 0.93
+AU-PRC Baseline: 0.33
+Accuracy: 0.85
+Precision: 0.96
+Recall: 0.57
+Specificity: 0.99
+NPV: 0.82
+ECE: 0.01
+MCE: 0.03
+class threshold: 0.95
+Mode:  train
+BCE Loss: 0.22
+AU-ROC: 0.96
+AU-PRC: 0.93
+AU-PRC Baseline: 0.33
+Accuracy: 0.80
+Precision: 0.98
+Recall: 0.39
+Specificity: 1.00
+NPV: 0.77
+ECE: 0.01
+MCE: 0.03
+======= VALIDATION ========
+class threshold: 0.5
+Mode:  train
+BCE Loss: 0.18
+AU-ROC: 0.97
+AU-PRC: 0.77
+AU-PRC Baseline: 0.05
+Accuracy: 0.94
+Precision: 0.47
+Recall: 0.87
+Specificity: 0.95
+NPV: 0.99
+ECE: 0.08
+MCE: 0.64
+class threshold: 0.55
+Mode:  train
+BCE Loss: 0.18
+AU-ROC: 0.97
+AU-PRC: 0.77
+AU-PRC Baseline: 0.05
+Accuracy: 0.95
+Precision: 0.48
+Recall: 0.87
+Specificity: 0.95
+NPV: 0.99
+ECE: 0.08
+MCE: 0.64
+class threshold: 0.6
+Mode:  train
+BCE Loss: 0.18
+AU-ROC: 0.97
+AU-PRC: 0.77
+AU-PRC Baseline: 0.05
+Accuracy: 0.95
+Precision: 0.50
+Recall: 0.86
+Specificity: 0.95
+NPV: 0.99
+ECE: 0.08
+MCE: 0.64
+class threshold: 0.65
+Mode:  train
+BCE Loss: 0.18
+AU-ROC: 0.97
+AU-PRC: 0.77
+AU-PRC Baseline: 0.05
+Accuracy: 0.95
+Precision: 0.53
+Recall: 0.85
+Specificity: 0.96
+NPV: 0.99
+ECE: 0.08
+MCE: 0.64
+class threshold: 0.7
+Mode:  train
+BCE Loss: 0.18
+AU-ROC: 0.97
+AU-PRC: 0.77
+AU-PRC Baseline: 0.05
+Accuracy: 0.96
+Precision: 0.54
+Recall: 0.84
+Specificity: 0.96
+NPV: 0.99
+ECE: 0.08
+MCE: 0.64
+class threshold: 0.75
+Mode:  train
+BCE Loss: 0.18
+AU-ROC: 0.97
+AU-PRC: 0.77
+AU-PRC Baseline: 0.05
+Accuracy: 0.96
+Precision: 0.57
+Recall: 0.83
+Specificity: 0.97
+NPV: 0.99
+ECE: 0.08
+MCE: 0.64
+class threshold: 0.8
+Mode:  train
+BCE Loss: 0.18
+AU-ROC: 0.97
+AU-PRC: 0.77
+AU-PRC Baseline: 0.05
+Accuracy: 0.96
+Precision: 0.59
+Recall: 0.81
+Specificity: 0.97
+NPV: 0.99
+ECE: 0.08
+MCE: 0.64
+class threshold: 0.85
+Mode:  train
+BCE Loss: 0.18
+AU-ROC: 0.97
+AU-PRC: 0.77
+AU-PRC Baseline: 0.05
+Accuracy: 0.96
+Precision: 0.63
+Recall: 0.78
+Specificity: 0.97
+NPV: 0.99
+ECE: 0.08
+MCE: 0.64
+class threshold: 0.8999999999999999
+Mode:  train
+BCE Loss: 0.18
+AU-ROC: 0.97
+AU-PRC: 0.77
+AU-PRC Baseline: 0.05
+Accuracy: 0.97
+Precision: 0.69
+Recall: 0.76
+Specificity: 0.98
+NPV: 0.99
+ECE: 0.08
+MCE: 0.64
+class threshold: 0.95
+Mode:  train
+BCE Loss: 0.18
+AU-ROC: 0.97
+AU-PRC: 0.77
+AU-PRC Baseline: 0.05
+Accuracy: 0.97
+Precision: 0.76
+Recall: 0.70
+Specificity: 0.99
+NPV: 0.98
+ECE: 0.08
+MCE: 0.64
+======= TESTING ========
+class threshold: 0.5
+Mode:  train
+BCE Loss: 0.18
+AU-ROC: 0.97
+AU-PRC: 0.73
+AU-PRC Baseline: 0.05
+Accuracy: 0.94
+Precision: 0.45
+Recall: 0.87
+Specificity: 0.94
+NPV: 0.99
+ECE: 0.08
+MCE: 0.69
+class threshold: 0.55
+Mode:  train
+BCE Loss: 0.18
+AU-ROC: 0.97
+AU-PRC: 0.73
+AU-PRC Baseline: 0.05
+Accuracy: 0.94
+Precision: 0.47
+Recall: 0.86
+Specificity: 0.95
+NPV: 0.99
+ECE: 0.08
+MCE: 0.69
+class threshold: 0.6
+Mode:  train
+BCE Loss: 0.18
+AU-ROC: 0.97
+AU-PRC: 0.73
+AU-PRC Baseline: 0.05
+Accuracy: 0.95
+Precision: 0.49
+Recall: 0.85
+Specificity: 0.95
+NPV: 0.99
+ECE: 0.08
+MCE: 0.69
+class threshold: 0.65
+Mode:  train
+BCE Loss: 0.18
+AU-ROC: 0.97
+AU-PRC: 0.73
+AU-PRC Baseline: 0.05
+Accuracy: 0.95
+Precision: 0.51
+Recall: 0.84
+Specificity: 0.96
+NPV: 0.99
+ECE: 0.08
+MCE: 0.69
+class threshold: 0.7
+Mode:  train
+BCE Loss: 0.18
+AU-ROC: 0.97
+AU-PRC: 0.73
+AU-PRC Baseline: 0.05
+Accuracy: 0.95
+Precision: 0.53
+Recall: 0.84
+Specificity: 0.96
+NPV: 0.99
+ECE: 0.08
+MCE: 0.69
+class threshold: 0.75
+Mode:  train
+BCE Loss: 0.18
+AU-ROC: 0.97
+AU-PRC: 0.73
+AU-PRC Baseline: 0.05
+Accuracy: 0.96
+Precision: 0.56
+Recall: 0.83
+Specificity: 0.96
+NPV: 0.99
+ECE: 0.08
+MCE: 0.69
+class threshold: 0.8
+Mode:  train
+BCE Loss: 0.18
+AU-ROC: 0.97
+AU-PRC: 0.73
+AU-PRC Baseline: 0.05
+Accuracy: 0.96
+Precision: 0.58
+Recall: 0.82
+Specificity: 0.97
+NPV: 0.99
+ECE: 0.08
+MCE: 0.69
+class threshold: 0.85
+Mode:  train
+BCE Loss: 0.18
+AU-ROC: 0.97
+AU-PRC: 0.73
+AU-PRC Baseline: 0.05
+Accuracy: 0.96
+Precision: 0.62
+Recall: 0.80
+Specificity: 0.97
+NPV: 0.99
+ECE: 0.08
+MCE: 0.69
+class threshold: 0.8999999999999999
+Mode:  train
+BCE Loss: 0.18
+AU-ROC: 0.97
+AU-PRC: 0.73
+AU-PRC Baseline: 0.05
+Accuracy: 0.97
+Precision: 0.67
+Recall: 0.77
+Specificity: 0.98
+NPV: 0.99
+ECE: 0.08
+MCE: 0.69
+class threshold: 0.95
+Mode:  train
+BCE Loss: 0.18
+AU-ROC: 0.97
+AU-PRC: 0.73
+AU-PRC Baseline: 0.05
+Accuracy: 0.97
+Precision: 0.73
+Recall: 0.69
+Specificity: 0.99
+NPV: 0.98
+ECE: 0.08
+MCE: 0.69
+Model saved to /cluster/home/guowen/projs/DT_mimic/out/exps_mimic31_newinputformat/snapshot/snapshot_epoch1.pth
+lr: [1.0000000000000016e-05]
+======= EPOCH 2.0 ========
+class threshold: 0.5
+Mode:  train
+BCE Loss: 0.15
+AU-ROC: 0.98
+AU-PRC: 0.97
+AU-PRC Baseline: 0.33
+Accuracy: 0.95
+Precision: 0.93
+Recall: 0.91
+Specificity: 0.97
+NPV: 0.96
+ECE: 0.01
+MCE: 0.05
+class threshold: 0.55
+Mode:  train
+BCE Loss: 0.15
+AU-ROC: 0.98
+AU-PRC: 0.97
+AU-PRC Baseline: 0.33
+Accuracy: 0.95
+Precision: 0.94
+Recall: 0.90
+Specificity: 0.97
+NPV: 0.95
+ECE: 0.01
+MCE: 0.05
+class threshold: 0.6
+Mode:  train
+BCE Loss: 0.15
+AU-ROC: 0.98
+AU-PRC: 0.97
+AU-PRC Baseline: 0.33
+Accuracy: 0.95
+Precision: 0.94
+Recall: 0.89
+Specificity: 0.97
+NPV: 0.95
+ECE: 0.01
+MCE: 0.05
+class threshold: 0.65
+Mode:  train
+BCE Loss: 0.15
+AU-ROC: 0.98
+AU-PRC: 0.97
+AU-PRC Baseline: 0.33
+Accuracy: 0.94
+Precision: 0.95
+Recall: 0.88
+Specificity: 0.98
+NPV: 0.94
+ECE: 0.01
+MCE: 0.05
+class threshold: 0.7
+Mode:  train
+BCE Loss: 0.15
+AU-ROC: 0.98
+AU-PRC: 0.97
+AU-PRC Baseline: 0.33
+Accuracy: 0.94
+Precision: 0.95
+Recall: 0.87
+Specificity: 0.98
+NPV: 0.94
+ECE: 0.01
+MCE: 0.05
+class threshold: 0.75
+Mode:  train
+BCE Loss: 0.15
+AU-ROC: 0.98
+AU-PRC: 0.97
+AU-PRC Baseline: 0.33
+Accuracy: 0.94
+Precision: 0.96
+Recall: 0.86
+Specificity: 0.98
+NPV: 0.93
+ECE: 0.01
+MCE: 0.05
+class threshold: 0.8
+Mode:  train
+BCE Loss: 0.15
+AU-ROC: 0.98
+AU-PRC: 0.97
+AU-PRC Baseline: 0.33
+Accuracy: 0.93
+Precision: 0.96
+Recall: 0.84
+Specificity: 0.98
+NPV: 0.92
+ECE: 0.01
+MCE: 0.05
+class threshold: 0.85
+Mode:  train
+BCE Loss: 0.15
+AU-ROC: 0.98
+AU-PRC: 0.97
+AU-PRC Baseline: 0.33
+Accuracy: 0.93
+Precision: 0.96
+Recall: 0.81
+Specificity: 0.98
+NPV: 0.91
+ECE: 0.01
+MCE: 0.05
+class threshold: 0.8999999999999999
+Mode:  train
+BCE Loss: 0.15
+AU-ROC: 0.98
+AU-PRC: 0.97
+AU-PRC Baseline: 0.33
+Accuracy: 0.91
+Precision: 0.97
+Recall: 0.77
+Specificity: 0.99
+NPV: 0.90
+ECE: 0.01
+MCE: 0.05
+class threshold: 0.95
+Mode:  train
+BCE Loss: 0.15
+AU-ROC: 0.98
+AU-PRC: 0.97
+AU-PRC Baseline: 0.33
+Accuracy: 0.89
+Precision: 0.98
+Recall: 0.67
+Specificity: 0.99
+NPV: 0.86
+ECE: 0.01
+MCE: 0.05
+======= VALIDATION ========
+class threshold: 0.5
+Mode:  train
+BCE Loss: 0.12
+AU-ROC: 0.97
+AU-PRC: 0.79
+AU-PRC Baseline: 0.05
+Accuracy: 0.96
+Precision: 0.58
+Recall: 0.86
+Specificity: 0.97
+NPV: 0.99
+ECE: 0.04
+MCE: 0.52
+class threshold: 0.55
+Mode:  train
+BCE Loss: 0.12
+AU-ROC: 0.97
+AU-PRC: 0.79
+AU-PRC Baseline: 0.05
+Accuracy: 0.96
+Precision: 0.60
+Recall: 0.85
+Specificity: 0.97
+NPV: 0.99
+ECE: 0.04
+MCE: 0.52
+class threshold: 0.6
+Mode:  train
+BCE Loss: 0.12
+AU-ROC: 0.97
+AU-PRC: 0.79
+AU-PRC Baseline: 0.05
+Accuracy: 0.96
+Precision: 0.61
+Recall: 0.84
+Specificity: 0.97
+NPV: 0.99
+ECE: 0.04
+MCE: 0.52
+class threshold: 0.65
+Mode:  train
+BCE Loss: 0.12
+AU-ROC: 0.97
+AU-PRC: 0.79
+AU-PRC Baseline: 0.05
+Accuracy: 0.97
+Precision: 0.64
+Recall: 0.83
+Specificity: 0.97
+NPV: 0.99
+ECE: 0.04
+MCE: 0.52
+class threshold: 0.7
+Mode:  train
+BCE Loss: 0.12
+AU-ROC: 0.97
+AU-PRC: 0.79
+AU-PRC Baseline: 0.05
+Accuracy: 0.97
+Precision: 0.66
+Recall: 0.82
+Specificity: 0.98
+NPV: 0.99
+ECE: 0.04
+MCE: 0.52
+class threshold: 0.75
+Mode:  train
+BCE Loss: 0.12
+AU-ROC: 0.97
+AU-PRC: 0.79
+AU-PRC Baseline: 0.05
+Accuracy: 0.97
+Precision: 0.67
+Recall: 0.80
+Specificity: 0.98
+NPV: 0.99
+ECE: 0.04
+MCE: 0.52
+class threshold: 0.8
+Mode:  train
+BCE Loss: 0.12
+AU-ROC: 0.97
+AU-PRC: 0.79
+AU-PRC Baseline: 0.05
+Accuracy: 0.97
+Precision: 0.71
+Recall: 0.78
+Specificity: 0.98
+NPV: 0.99
+ECE: 0.04
+MCE: 0.52
+class threshold: 0.85
+Mode:  train
+BCE Loss: 0.12
+AU-ROC: 0.97
+AU-PRC: 0.79
+AU-PRC Baseline: 0.05
+Accuracy: 0.97
+Precision: 0.73
+Recall: 0.75
+Specificity: 0.98
+NPV: 0.99
+ECE: 0.04
+MCE: 0.52
+class threshold: 0.8999999999999999
+Mode:  train
+BCE Loss: 0.12
+AU-ROC: 0.97
+AU-PRC: 0.79
+AU-PRC Baseline: 0.05
+Accuracy: 0.97
+Precision: 0.76
+Recall: 0.70
+Specificity: 0.99
+NPV: 0.98
+ECE: 0.04
+MCE: 0.52
+class threshold: 0.95
+Mode:  train
+BCE Loss: 0.12
+AU-ROC: 0.97
+AU-PRC: 0.79
+AU-PRC Baseline: 0.05
+Accuracy: 0.97
+Precision: 0.80
+Recall: 0.61
+Specificity: 0.99
+NPV: 0.98
+ECE: 0.04
+MCE: 0.52
+======= TESTING ========
+class threshold: 0.5
+Mode:  train
+BCE Loss: 0.12
+AU-ROC: 0.97
+AU-PRC: 0.74
+AU-PRC Baseline: 0.05
+Accuracy: 0.96
+Precision: 0.55
+Recall: 0.83
+Specificity: 0.96
+NPV: 0.99
+ECE: 0.04
+MCE: 0.53
+class threshold: 0.55
+Mode:  train
+BCE Loss: 0.12
+AU-ROC: 0.97
+AU-PRC: 0.74
+AU-PRC Baseline: 0.05
+Accuracy: 0.96
+Precision: 0.58
+Recall: 0.81
+Specificity: 0.97
+NPV: 0.99
+ECE: 0.04
+MCE: 0.53
+class threshold: 0.6
+Mode:  train
+BCE Loss: 0.12
+AU-ROC: 0.97
+AU-PRC: 0.74
+AU-PRC Baseline: 0.05
+Accuracy: 0.96
+Precision: 0.59
+Recall: 0.80
+Specificity: 0.97
+NPV: 0.99
+ECE: 0.04
+MCE: 0.53
+class threshold: 0.65
+Mode:  train
+BCE Loss: 0.12
+AU-ROC: 0.97
+AU-PRC: 0.74
+AU-PRC Baseline: 0.05
+Accuracy: 0.96
+Precision: 0.61
+Recall: 0.79
+Specificity: 0.97
+NPV: 0.99
+ECE: 0.04
+MCE: 0.53
+class threshold: 0.7
+Mode:  train
+BCE Loss: 0.12
+AU-ROC: 0.97
+AU-PRC: 0.74
+AU-PRC Baseline: 0.05
+Accuracy: 0.97
+Precision: 0.64
+Recall: 0.78
+Specificity: 0.98
+NPV: 0.99
+ECE: 0.04
+MCE: 0.53
+class threshold: 0.75
+Mode:  train
+BCE Loss: 0.12
+AU-ROC: 0.97
+AU-PRC: 0.74
+AU-PRC Baseline: 0.05
+Accuracy: 0.97
+Precision: 0.65
+Recall: 0.76
+Specificity: 0.98
+NPV: 0.99
+ECE: 0.04
+MCE: 0.53
+class threshold: 0.8
+Mode:  train
+BCE Loss: 0.12
+AU-ROC: 0.97
+AU-PRC: 0.74
+AU-PRC Baseline: 0.05
+Accuracy: 0.97
+Precision: 0.68
+Recall: 0.75
+Specificity: 0.98
+NPV: 0.99
+ECE: 0.04
+MCE: 0.53
+class threshold: 0.85
+Mode:  train
+BCE Loss: 0.12
+AU-ROC: 0.97
+AU-PRC: 0.74
+AU-PRC Baseline: 0.05
+Accuracy: 0.97
+Precision: 0.71
+Recall: 0.73
+Specificity: 0.98
+NPV: 0.99
+ECE: 0.04
+MCE: 0.53
+class threshold: 0.8999999999999999
+Mode:  train
+BCE Loss: 0.12
+AU-ROC: 0.97
+AU-PRC: 0.74
+AU-PRC Baseline: 0.05
+Accuracy: 0.97
+Precision: 0.74
+Recall: 0.70
+Specificity: 0.99
+NPV: 0.98
+ECE: 0.04
+MCE: 0.53
+class threshold: 0.95
+Mode:  train
+BCE Loss: 0.12
+AU-ROC: 0.97
+AU-PRC: 0.74
+AU-PRC Baseline: 0.05
+Accuracy: 0.97
+Precision: 0.77
+Recall: 0.62
+Specificity: 0.99
+NPV: 0.98
+ECE: 0.04
+MCE: 0.53
+Model saved to /cluster/home/guowen/projs/DT_mimic/out/exps_mimic31_newinputformat/snapshot/snapshot_epoch2.pth
+lr: [1.0000000000000016e-05]
+======= EPOCH 3.0 ========
+class threshold: 0.5
+Mode:  train
+BCE Loss: 0.11
+AU-ROC: 0.99
+AU-PRC: 0.98
+AU-PRC Baseline: 0.33
+Accuracy: 0.96
+Precision: 0.94
+Recall: 0.94
+Specificity: 0.97
+NPV: 0.97
+ECE: 0.01
+MCE: 0.06
+class threshold: 0.55
+Mode:  train
+BCE Loss: 0.11
+AU-ROC: 0.99
+AU-PRC: 0.98
+AU-PRC Baseline: 0.33
+Accuracy: 0.96
+Precision: 0.94
+Recall: 0.94
+Specificity: 0.97
+NPV: 0.97
+ECE: 0.01
+MCE: 0.06
+class threshold: 0.6
+Mode:  train
+BCE Loss: 0.11
+AU-ROC: 0.99
+AU-PRC: 0.98
+AU-PRC Baseline: 0.33
+Accuracy: 0.96
+Precision: 0.95
+Recall: 0.93
+Specificity: 0.97
+NPV: 0.96
+ECE: 0.01
+MCE: 0.06
+class threshold: 0.65
+Mode:  train
+BCE Loss: 0.11
+AU-ROC: 0.99
+AU-PRC: 0.98
+AU-PRC Baseline: 0.33
+Accuracy: 0.96
+Precision: 0.95
+Recall: 0.92
+Specificity: 0.98
+NPV: 0.96
+ECE: 0.01
+MCE: 0.06
+class threshold: 0.7
+Mode:  train
+BCE Loss: 0.11
+AU-ROC: 0.99
+AU-PRC: 0.98
+AU-PRC Baseline: 0.33
+Accuracy: 0.95
+Precision: 0.96
+Recall: 0.91
+Specificity: 0.98
+NPV: 0.95
+ECE: 0.01
+MCE: 0.06
+class threshold: 0.75
+Mode:  train
+BCE Loss: 0.11
+AU-ROC: 0.99
+AU-PRC: 0.98
+AU-PRC Baseline: 0.33
+Accuracy: 0.95
+Precision: 0.96
+Recall: 0.89
+Specificity: 0.98
+NPV: 0.95
+ECE: 0.01
+MCE: 0.06
+class threshold: 0.8
+Mode:  train
+BCE Loss: 0.11
+AU-ROC: 0.99
+AU-PRC: 0.98
+AU-PRC Baseline: 0.33
+Accuracy: 0.95
+Precision: 0.96
+Recall: 0.88
+Specificity: 0.98
+NPV: 0.94
+ECE: 0.01
+MCE: 0.06
+class threshold: 0.85
+Mode:  train
+BCE Loss: 0.11
+AU-ROC: 0.99
+AU-PRC: 0.98
+AU-PRC Baseline: 0.33
+Accuracy: 0.94
+Precision: 0.97
+Recall: 0.85
+Specificity: 0.99
+NPV: 0.93
+ECE: 0.01
+MCE: 0.06
+class threshold: 0.8999999999999999
+Mode:  train
+BCE Loss: 0.11
+AU-ROC: 0.99
+AU-PRC: 0.98
+AU-PRC Baseline: 0.33
+Accuracy: 0.93
+Precision: 0.97
+Recall: 0.82
+Specificity: 0.99
+NPV: 0.91
+ECE: 0.01
+MCE: 0.06
+class threshold: 0.95
+Mode:  train
+BCE Loss: 0.11
+AU-ROC: 0.99
+AU-PRC: 0.98
+AU-PRC Baseline: 0.33
+Accuracy: 0.91
+Precision: 0.98
+Recall: 0.74
+Specificity: 0.99
+NPV: 0.88
+ECE: 0.01
+MCE: 0.06
+======= VALIDATION ========
+class threshold: 0.5
+Mode:  train
+BCE Loss: 0.13
+AU-ROC: 0.97
+AU-PRC: 0.79
+AU-PRC Baseline: 0.05
+Accuracy: 0.96
+Precision: 0.55
+Recall: 0.86
+Specificity: 0.96
+NPV: 0.99
+ECE: 0.04
+MCE: 0.57
+class threshold: 0.55
+Mode:  train
+BCE Loss: 0.13
+AU-ROC: 0.97
+AU-PRC: 0.79
+AU-PRC Baseline: 0.05
+Accuracy: 0.96
+Precision: 0.57
+Recall: 0.86
+Specificity: 0.96
+NPV: 0.99
+ECE: 0.04
+MCE: 0.57
+class threshold: 0.6
+Mode:  train
+BCE Loss: 0.13
+AU-ROC: 0.97
+AU-PRC: 0.79
+AU-PRC Baseline: 0.05
+Accuracy: 0.96
+Precision: 0.58
+Recall: 0.85
+Specificity: 0.97
+NPV: 0.99
+ECE: 0.04
+MCE: 0.57
+class threshold: 0.65
+Mode:  train
+BCE Loss: 0.13
+AU-ROC: 0.97
+AU-PRC: 0.79
+AU-PRC Baseline: 0.05
+Accuracy: 0.96
+Precision: 0.60
+Recall: 0.84
+Specificity: 0.97
+NPV: 0.99
+ECE: 0.04
+MCE: 0.57
+class threshold: 0.7
+Mode:  train
+BCE Loss: 0.13
+AU-ROC: 0.97
+AU-PRC: 0.79
+AU-PRC Baseline: 0.05
+Accuracy: 0.96
+Precision: 0.62
+Recall: 0.84
+Specificity: 0.97
+NPV: 0.99
+ECE: 0.04
+MCE: 0.57
+class threshold: 0.75
+Mode:  train
+BCE Loss: 0.13
+AU-ROC: 0.97
+AU-PRC: 0.79
+AU-PRC Baseline: 0.05
+Accuracy: 0.97
+Precision: 0.64
+Recall: 0.82
+Specificity: 0.97
+NPV: 0.99
+ECE: 0.04
+MCE: 0.57
+class threshold: 0.8
+Mode:  train
+BCE Loss: 0.13
+AU-ROC: 0.97
+AU-PRC: 0.79
+AU-PRC Baseline: 0.05
+Accuracy: 0.97
+Precision: 0.66
+Recall: 0.82
+Specificity: 0.98
+NPV: 0.99
+ECE: 0.04
+MCE: 0.57
+class threshold: 0.85
+Mode:  train
+BCE Loss: 0.13
+AU-ROC: 0.97
+AU-PRC: 0.79
+AU-PRC Baseline: 0.05
+Accuracy: 0.97
+Precision: 0.67
+Recall: 0.80
+Specificity: 0.98
+NPV: 0.99
+ECE: 0.04
+MCE: 0.57
+class threshold: 0.8999999999999999
+Mode:  train
+BCE Loss: 0.13
+AU-ROC: 0.97
+AU-PRC: 0.79
+AU-PRC Baseline: 0.05
+Accuracy: 0.97
+Precision: 0.71
+Recall: 0.77
+Specificity: 0.98
+NPV: 0.99
+ECE: 0.04
+MCE: 0.57
+class threshold: 0.95
+Mode:  train
+BCE Loss: 0.13
+AU-ROC: 0.97
+AU-PRC: 0.79
+AU-PRC Baseline: 0.05
+Accuracy: 0.97
+Precision: 0.76
+Recall: 0.70
+Specificity: 0.99
+NPV: 0.98
+ECE: 0.04
+MCE: 0.57
+======= TESTING ========
+class threshold: 0.5
+Mode:  train
+BCE Loss: 0.13
+AU-ROC: 0.97
+AU-PRC: 0.74
+AU-PRC Baseline: 0.05
+Accuracy: 0.95
+Precision: 0.53
+Recall: 0.85
+Specificity: 0.96
+NPV: 0.99
+ECE: 0.04
+MCE: 0.62
+class threshold: 0.55
+Mode:  train
+BCE Loss: 0.13
+AU-ROC: 0.97
+AU-PRC: 0.74
+AU-PRC Baseline: 0.05
+Accuracy: 0.96
+Precision: 0.54
+Recall: 0.84
+Specificity: 0.96
+NPV: 0.99
+ECE: 0.04
+MCE: 0.62
+class threshold: 0.6
+Mode:  train
+BCE Loss: 0.13
+AU-ROC: 0.97
+AU-PRC: 0.74
+AU-PRC Baseline: 0.05
+Accuracy: 0.96
+Precision: 0.56
+Recall: 0.83
+Specificity: 0.96
+NPV: 0.99
+ECE: 0.04
+MCE: 0.62
+class threshold: 0.65
+Mode:  train
+BCE Loss: 0.13
+AU-ROC: 0.97
+AU-PRC: 0.74
+AU-PRC Baseline: 0.05
+Accuracy: 0.96
+Precision: 0.58
+Recall: 0.82
+Specificity: 0.97
+NPV: 0.99
+ECE: 0.04
+MCE: 0.62
+class threshold: 0.7
+Mode:  train
+BCE Loss: 0.13
+AU-ROC: 0.97
+AU-PRC: 0.74
+AU-PRC Baseline: 0.05
+Accuracy: 0.96
+Precision: 0.59
+Recall: 0.81
+Specificity: 0.97
+NPV: 0.99
+ECE: 0.04
+MCE: 0.62
+class threshold: 0.75
+Mode:  train
+BCE Loss: 0.13
+AU-ROC: 0.97
+AU-PRC: 0.74
+AU-PRC Baseline: 0.05
+Accuracy: 0.96
+Precision: 0.60
+Recall: 0.80
+Specificity: 0.97
+NPV: 0.99
+ECE: 0.04
+MCE: 0.62
+class threshold: 0.8
+Mode:  train
+BCE Loss: 0.13
+AU-ROC: 0.97
+AU-PRC: 0.74
+AU-PRC Baseline: 0.05
+Accuracy: 0.96
+Precision: 0.62
+Recall: 0.80
+Specificity: 0.97
+NPV: 0.99
+ECE: 0.04
+MCE: 0.62
+class threshold: 0.85
+Mode:  train
+BCE Loss: 0.13
+AU-ROC: 0.97
+AU-PRC: 0.74
+AU-PRC Baseline: 0.05
+Accuracy: 0.97
+Precision: 0.65
+Recall: 0.78
+Specificity: 0.98
+NPV: 0.99
+ECE: 0.04
+MCE: 0.62
+class threshold: 0.8999999999999999
+Mode:  train
+BCE Loss: 0.13
+AU-ROC: 0.97
+AU-PRC: 0.74
+AU-PRC Baseline: 0.05
+Accuracy: 0.97
+Precision: 0.69
+Recall: 0.75
+Specificity: 0.98
+NPV: 0.99
+ECE: 0.04
+MCE: 0.62
+class threshold: 0.95
+Mode:  train
+BCE Loss: 0.13
+AU-ROC: 0.97
+AU-PRC: 0.74
+AU-PRC Baseline: 0.05
+Accuracy: 0.97
+Precision: 0.75
+Recall: 0.70
+Specificity: 0.99
+NPV: 0.98
+ECE: 0.04
+MCE: 0.62
+Model saved to /cluster/home/guowen/projs/DT_mimic/out/exps_mimic31_newinputformat/snapshot/snapshot_epoch3.pth
+lr: [1.0000000000000016e-05]
+======= EPOCH 4.0 ========
