@@ -79,18 +79,18 @@ def test(model, test_loader):
 
         #print(gt_meds.shape[1], input_list[0].shape[1])
         iou = min(gt_meds.shape[1] - input_min_length, input_list[0].shape[1] - input_min_length) / max(gt_meds.shape[1] - input_min_length, input_list[0].shape[1] - input_min_length)
-        #print("iou:", iou)
+        print("iou:", iou)
         recall = rescale_iou(iou)
-        #print("Recall: ", recall)
+        print("Recall: ", recall)
         recalls.append(recall)
 
-        precision_min_length = min(gt_meds.shape[1] - input_min_length, input_list[0].shape[1] - input_min_length)
-        precision = 0
-        for i in range(len(input_list)):
-            precision += cal_precision(input_list[i].detach().cpu()[:, input_min_length:input_min_length + precision_min_length], batch[i][:, input_min_length:input_min_length + precision_min_length])
-        precision = precision.item() / len(input_list)
-        #print("Precision: ", precision)
-        precisions.append(precision)
+        # precision_min_length = min(gt_meds.shape[1] - input_min_length, input_list[0].shape[1] - input_min_length)
+        # precision = 0
+        # for i in range(len(input_list)):
+        #     precision += cal_precision(input_list[i].detach().cpu()[:, input_min_length:input_min_length + precision_min_length], batch[i][:, input_min_length:input_min_length + precision_min_length])
+        # precision = precision.item() / len(input_list)
+        # #print("Precision: ", precision)
+        # precisions.append(precision)
 
         torch.cuda.empty_cache()
 

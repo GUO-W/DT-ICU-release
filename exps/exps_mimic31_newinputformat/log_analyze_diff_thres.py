@@ -164,7 +164,7 @@ if __name__ == '__main__':
         # {'file': 'log_maxlen480_thres72_bz16_lr1e-5_bceloss_w_pred0.5.txt', 'thresholds': [0.5]}, # w.pred=true, +_loss=1.0
         # {'file': 'log_maxlen480_thres48_bz16_lr1e-5_bceloss_w_pred0.5.txt', 'thresholds': [0.5]}, 
         {'file': 'log.txt', 'thresholds': [0.5]},
-        {'file': 'log_newlr.txt', 'thresholds': 'all'},
+        {'file': 'log_newlr_rerun.txt', 'thresholds': [0.5]},
     ]
     experiments = {}
     for cfg in log_settings:

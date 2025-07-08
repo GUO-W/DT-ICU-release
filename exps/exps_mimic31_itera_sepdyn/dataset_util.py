@@ -7,10 +7,10 @@ import json
 from pathlib import Path
 from IPython import embed
 
-def get_cols(dyn_mode):
+def get_cols(dyn, dyn_mode):
 
     d_items = pd.read_csv("/cluster/work/scaimed/users/wguo/datasets/mimiciv3.1/3.1/icu/d_items.csv", usecols=["itemid", "param_type"]).drop_duplicates("itemid")
-    dyn = pd.read_csv("~/projs/DT_mimic/data/mimiciv3.1/processed_icu/12476282_35564830/dynamic.csv", header=0)
+    # dyn = pd.read_csv("~/projs/DT_mimic/data/mimiciv3.1/processed_icu/12476282_35564830/dynamic.csv", header=0)
     cols_dict = {}
     keys = ["inputevents", "procedureevents", "outputevents", "chartevents", "datetimeevents", "ingredientevents"]
 
@@ -74,10 +74,22 @@ def get_cols(dyn_mode):
 #    inputevents_cols = json.load(f)
 #    dyn_ie = dyn[inputevents_cols]
 if __name__ == "__main__":
-    cols_dict0 = get_cols(0)
-    cols_dict1 = get_cols(1)
-    cols_dict2 = get_cols(2)
-    embed()
+    # cols_dict0 = get_cols(0)
+    import glob
+    import os
+    files = glob.glob("/cluster/work/scaimed/users/wguo/datasets/mimiciv3.1/processed_icu/*")
+    print(files)
+    for f in files[:10]:
+        if not os.is_dir(f):
+            continue
+        print(f)
+        dyn = pd.read_csv(f + "/dynamic.csv", header=0)
+        cols_dict1 = get_cols(1)
+        print("chartevents_checkbox", cols_dict1["chartevents_checkbox"])
+        print("datetimeevents_datetime", cols_dict1["datetimeevents_datetime"])
+        print("outputevents_datetime", cols_dict1["outputevents_datetime"])
+    # cols_dict2 = get_cols(2)
+    # embed()
 
 
 '''
@@ -87,6 +99,17 @@ Out[7]: dict_keys(['inputevents', 'procedureevents', 'outputevents', 'chartevent
 In [8]: cols_dict1.keys() #12
 Out[8]: dict_keys(['chartevents_checkbox', 'chartevents_numeric', 'chartevents_numericwithtag', 'chartevents_text', 'datetimeevents_datetime', 'ingredientevents_ingredient', 'inputevents_solution', 'outputevents_datetime', 'outputevents_ingredient', 'outputevents_numeric', 'outputevents_text', 'procedureevents_processes'])
 
+- binary: 'procedureevents_processes'
+- integer: 'chartevents_checkbox', 'datetimeevents_datetime','outputevents_datetime'
+- regression: 'chartevents_numeric', 'chartevents_numericwithtag', 'ingredientevents_ingredient','inputevents_solution','outputevents_ingredient','outputevents_numeric'
+- integer / regression: 'chartevents_text', 'outputevents_text',
+
 In [9]: cols_dict2.keys() #8
 Out[9]: dict_keys(['Checkbox', 'Date and time', 'Ingredient', 'Numeric', 'Numeric with tag', 'Processes', 'Solution', 'Text'])
+
+- binary: processes
+- integer: date and time, checkbox
+- regression: solution, numeric, ingredient, numeric with tag
+- integer / regression: text
+
 '''

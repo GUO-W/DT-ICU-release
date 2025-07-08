@@ -158,12 +158,16 @@ def plot_metrics(experiments, METRICS):
 if __name__ == '__main__':
     METRICS = ['BCE Loss', 'PRED Loss', 'Total Loss', 'AU-ROC', 'AU-PRC', 'Accuracy', 'Precision', 'Recall']
     log_settings = [
-        {'file': 'log_oversampling_bz16_lr1e-5_bceloss.txt', 'thresholds': 'all'}, # recall vs precision -- choose recall --thres=0.5
-        {'file': 'log_maxlen500_thres50_bz16_lr1e-5_bceloss.txt', 'thresholds': [0.5]}, 
-        {'file': 'log_maxlen480_thres72_bz16_lr1e-5_bceloss.txt', 'thresholds': [0.5]}, # config:  train_max_length = 480, lr1e-5, long-short thres = 72
-        {'file': 'log_maxlen480_thres72_bz16_lr1e-5_bceloss_w_pred0.5.txt', 'thresholds': [0.5]}, # w.pred=true, +_loss=1.0
-        {'file': 'log_maxlen480_thres48_bz16_lr1e-5_bceloss_w_pred0.5.txt', 'thresholds': [0.5]}, 
-        #{'file': 'log_test.txt', 'thresholds': [0.8]}
+        # {'file': 'log_oversampling_bz16_lr1e-5_bceloss.txt', 'thresholds': 'all'}, # recall vs precision -- choose recall --thres=0.5
+        # {'file': 'log_maxlen500_thres50_bz16_lr1e-5_bceloss.txt', 'thresholds': [0.5]}, 
+        # {'file': 'log_maxlen480_thres72_bz16_lr1e-5_bceloss.txt', 'thresholds': [0.5]}, # config:  train_max_length = 480, lr1e-5, long-short thres = 72
+        # {'file': 'log_maxlen480_thres72_bz16_lr1e-5_bceloss_w_pred0.5.txt', 'thresholds': [0.5]}, # w.pred=true, +_loss=1.0
+        # {'file': 'log_maxlen480_thres48_bz16_lr1e-5_bceloss_w_pred0.5.txt', 'thresholds': [0.5]}, 
+        {'file': 'test.txt', 'thresholds': [0.5]},
+        #{'file': 'log_trans.txt', 'thresholds': [0.5]}, 
+        {'file': '../../exps_mimic31_itera_mlp/log/log_mlp.txt', 'thresholds': [0.5]}, 
+        {'file': '../../exps_mimic31_itera_rnn/log/log_rnn.txt', 'thresholds': [0.5]}, 
+        {'file': '../../exps_mimic31_itera_lstm/log/log_lstm.txt', 'thresholds': [0.5]}, 
     ]
     experiments = {}
     for cfg in log_settings:

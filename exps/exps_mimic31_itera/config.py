@@ -75,8 +75,8 @@ C.lrn_rate = 5e-7 #1e-5
 C.warmup_epochs = 2
 C.grad_accum_steps = 16
 
-C.test_input_min_length = 12
-C.test_pos_threshold = 0.4
+C.test_input_min_length = 4 # 12
+C.test_pos_threshold = 0.9
 C.test_max_pred_length_ratio = 2.0
 
 ## todo
