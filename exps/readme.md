@@ -2,6 +2,7 @@
 mimic2.0
 follow setting of baseline literature, use data 72h preprocessed by baseline literature
 could compare with baseline
+[todo] test baseline: with balancing the test data -- if correspond with paper reported result?
 
 ## exps_mimic31
 mimic 3.1, preprocessed by yanke's code
@@ -64,13 +65,35 @@ vs _itera）precision: from <1 to 90+
 [TODO] test mordality updates in iterative inference
 [TODO] analyze weight metrix (+gcn)
 
+## exps_mimic31_itera
+## exps_mimic31_itera_mlp, exps_mimic31_itera_rnn, exps_mimic31_itera_lstm
+vs  exps_mimic31_itera, with diff models (set in config).
+[todo] + vs transformer decoder
 
+## exps_iii
+from exps_mimic31_itera
+
+- mimiciii pipeiline debug:
+    - miss icu_death_labels.csv -- add in mimic_iii_split.py
+    - bug: miss dynamic.csv in many stays -- debug mimic_iii_process.py
+    - change: still have empty dynamic.csv for some stays -- in mimic_iii_prepare.py, stays with 0 dynamic are also kept [todo]
+        modified mimic_iii_prepare.py, just keep stays with >0 hours of dymanic data.
+        [todo] rerun prepare, process, split, and vocab.
+        so all the output files of prepare, process, split just contain dyn>0h data.
+    - change: saving path of processed_icu etc, sync with iv.
+    - bug: test_ids.csv do not correspond with processed_icu/sub_folders -- debug mimic_iii_process.py
+        save path {hadm_id}_{icu_id}"  should be subject_id  (prepare + process 'HADM_ID', split stay_id) lin 178, 121
+    - [todo] push code iii.
+
+- + data_seqlen_gen.py  gen data lens in ./data_seqlen_analy/, for data balancing [todo]
+- [todo]  modify path, run pipeline
 
 
 
 
 
 ## todo
+
 keep len>500 data
 try focal loss
 pred head exp + evaluation
