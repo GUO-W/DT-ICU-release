@@ -75,15 +75,16 @@ from exps_mimic31_itera
 
 - mimiciii pipeiline debug:
     - miss icu_death_labels.csv -- add in mimic_iii_split.py
-    - bug: miss dynamic.csv in many stays -- debug mimic_iii_process.py
-    - change: still have empty dynamic.csv for some stays -- in mimic_iii_prepare.py, stays with 0 dynamic are also kept [todo]
-        modified mimic_iii_prepare.py, just keep stays with >0 hours of dymanic data.
-        [todo] rerun prepare, process, split, and vocab.
-        so all the output files of prepare, process, split just contain dyn>0h data.
-    - change: saving path of processed_icu etc, sync with iv.
     - bug: test_ids.csv do not correspond with processed_icu/sub_folders -- debug mimic_iii_process.py
         save path {hadm_id}_{icu_id}"  should be subject_id  (prepare + process 'HADM_ID', split stay_id) lin 178, 121
-    - [todo] push code iii.
+    - bug: empty dynamic.csv in many stays -- debug mimic_iii_process.py
+    - still have empty dynamic.csv for some stays after debugging -- reason: in mimic_iii_prepare.py, some stays with 0 dynamic are also kept
+        modified mimic_iii_prepare.py, just keep stays with >0 hours of dymanic data in mimic_iii_icu.csv
+        so all the output files of prepare, process, split just contain dyn>0h data.
+    - change: admission merge move from process to prepare, avoid overwrite mimic_iii_icu.csv -- cause pbs when re-run process - and as a result, mimic_iii_split.py and make_vocab.py are also needed to be changed accordingly.
+    - change: modified saving paths
+    - [todo] push code iii to github
+    samples 60373 (orig raw samples 61522, 1149 ICU stays with no valid VALUENUM events )
 
 - + data_seqlen_gen.py  gen data lens in ./data_seqlen_analy/, for data balancing [todo]
 - [todo]  modify path, run pipeline

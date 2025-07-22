@@ -1,8 +1,5 @@
 #!/usr/bin/env python
-"""mimic_iii_process.py – v7
-Convert long‑format CSVs (mimic_iii_events/icu) to the folder layout required
-by the Digital‑Twin repo.
-
+"""mimic_iii_process.py 
 processed_icu/<HADM_ID>_<ICUSTAY_ID>/
   dynamic.csv     # hourly matrix with fixed header across stays
   diagnoses.csv   # 1×V multi‑hot ICD‑9 vector (V ≈ 6k)

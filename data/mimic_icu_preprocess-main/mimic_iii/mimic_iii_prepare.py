@@ -14,17 +14,22 @@ def prepare_mimic_data(mimic_data_dir):
     icu = icu.loc[icu.OUTTIME.notna()]
 
     selected_icustay_ids = icu['ICUSTAY_ID'].drop_duplicates()
-    # selected_icustay_ids = icu['ICUSTAY_ID'].drop_duplicates(keep=False)
-    # icu = icu.loc[icu.ICUSTAY_ID.isin(selected_icustay_ids)]
+
+    icu = icu.loc[icu.ICUSTAY_ID.isin(selected_icustay_ids)]
 
     # Filter out pediatric patients.
     pat = pd.read_csv(mimic_data_dir+'PATIENTS.csv.gz', usecols=['SUBJECT_ID', 'DOB', 'DOD', 'GENDER'])
     icu = icu.merge(pat, on='SUBJECT_ID', how='left')
     icu['INTIME'] = pd.to_datetime(icu.INTIME)
     icu['DOB'] = pd.to_datetime(icu.DOB)
-    icu['AGE'] = (icu['INTIME'] - icu['DOB']).dt.days // 365
-    # icu['AGE'] = icu.INTIME.map(lambda x:x.year) - icu.DOB.map(lambda x:x.year)
+    #icu['AGE'] = (icu['INTIME'] - icu['DOB']).dt.days // 365
+    icu['AGE'] = icu.INTIME.map(lambda x:x.year) - icu.DOB.map(lambda x:x.year)
     #icu = icu.loc[icu.AGE>=18] #53k icustays
+    
+    # add admission
+    adm_cols = ["HADM_ID", "ETHNICITY", "LANGUAGE", "MARITAL_STATUS", "ADMISSION_TYPE", "INSURANCE"]
+    admissions = pd.read_csv(mimic_data_dir + 'ADMISSIONS.csv.gz', usecols=adm_cols)
+    icu = icu.merge(admissions, on='HADM_ID', how='left')
 
     # Observation
     # Extract chartevents for icu stays.
@@ -299,6 +304,7 @@ def prepare_mimic_data(mimic_data_dir):
         print (k)
         ev_k = pd.concat((ch.loc[ch.ITEMID.isin(v[0])], la.loc[la.ITEMID.isin(v[0])]))
         ev_k = ev_k.loc[(ev_k.VALUENUM>=v[1][0])&(ev_k.VALUENUM<=v[1][1])]
+        ev_k = ev_k.copy()
         ev_k['NAME'] = k
         ev_k['VALUEUOM'] = v[2]
         ev_k['VALUE'] = None
@@ -728,12 +734,28 @@ def prepare_mimic_data(mimic_data_dir):
     events = pd.concat([events, ev_k])
     del ev_k
 
-    # Save data.
-    print("saving done")
-    events.to_csv(mimic_data_dir + 'mimic_iii_events.csv', index=False)
-    icu.to_csv(mimic_data_dir + 'mimic_iii_icu.csv', index=False)
+    ## Save data.
+    print("saving res")
+    # just keep icu stays with dyn > 0 hours.
+    original_icu_count = len(icu)
+    valid_event_mask = events["VALUENUM"].notna()
+    valid_events = events[valid_event_mask]
+    valid_icustay_ids = valid_events["ICUSTAY_ID"].dropna().astype(int).unique()
+    icu = icu[icu["ICUSTAY_ID"].isin(valid_icustay_ids)]
+
+    print(f"Total ICU stay count: {original_icu_count}")
+    print(f"Final ICU count after filtering: {len(icu)}")
+    print(f"Removed {original_icu_count - len(icu)} ICU stays with no valid VALUENUM events")
+
+    events.to_csv(mimic_data_dir + '../mimic_iii_events.csv', index=False)
+    icu.to_csv(mimic_data_dir + '../mimic_iii_icu.csv', index=False)
     print("save done")
 
 if __name__ == '__main__':
-    mimic_data_dir = './1.4/'
+    mimic_data_dir = '/cluster/work/scaimed/users/wguo/datasets/mimiciii/1.4/'
     prepare_mimic_data(mimic_data_dir)
+
+
+# Total ICU stay count: 61522
+# Final ICU count after filtering: 60373
+# Removed 1149 ICU stays with no valid VALUENUM events

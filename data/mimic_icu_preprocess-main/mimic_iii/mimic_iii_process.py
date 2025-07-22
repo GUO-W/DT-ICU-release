@@ -1,9 +1,6 @@
 #!/usr/bin/env python
-"""mimic_iii_process.py – v7
-Convert long‑format CSVs (mimic_iii_events/icu) to the folder layout required
-by the Digital‑Twin repo.
-
-processed_icu/<HADM_ID>_<ICUSTAY_ID>/
+"""mimic_iii_process.py
+processed_icu/<STAY_ID>_<ICUSTAY_ID>/
   dynamic.csv     # hourly matrix with fixed header across stays
   diagnoses.csv   # 1×V multi‑hot ICD‑9 vector (V ≈ 6k)
   demo.csv        # demographics / socio‑economic static vars
@@ -102,8 +99,8 @@ def pivot_stay(events: pl.DataFrame, intime: pd.Timestamp, header: List[str]) ->
 
 def main(data_dir: str):
     root = Path(data_dir)
-    events_csv = root / "mimic_iii_events.csv"
-    icu_csv    = root / "mimic_iii_icu.csv"
+    events_csv = root / "../mimic_iii_events.csv"
+    icu_csv    = root / "../mimic_iii_icu.csv"
     if not (events_csv.exists() and icu_csv.exists()):
         sys.exit("[err] run mimic_iii_prepare.py first – missing long CSVs")
 
@@ -121,17 +118,18 @@ def main(data_dir: str):
         _as_int(pl.col("SUBJECT_ID")).alias("SUBJECT_ID")
     )
     
-    # --- ADMISSIONS extras --------------------------------
-    adm_cols = ["HADM_ID", "ETHNICITY", "LANGUAGE", "MARITAL_STATUS", "ADMISSION_TYPE", "INSURANCE"]
-    icu_df = icu_df.drop(adm_cols[1:])
+    # # --- ADMISSIONS extras --------------------------------
+    # adm_cols = ["HADM_ID", "ETHNICITY", "LANGUAGE", "MARITAL_STATUS", "ADMISSION_TYPE", "INSURANCE"]
+    # #icu_df = icu_df.drop(adm_cols[1:])
 
-    admissions_df = (
-        pl.read_csv(root / "ADMISSIONS.csv.gz",
-                    columns=adm_cols, infer_schema_length=0).with_columns(_as_int(pl.col("HADM_ID")).alias("HADM_ID"))
-    )
+    # admissions_df = (
+    #     pl.read_csv(root / "ADMISSIONS.csv.gz",
+    #                 columns=adm_cols, infer_schema_length=0).with_columns(_as_int(pl.col("HADM_ID")).alias("HADM_ID"))
+    # )
     
-    icu_df = icu_df.join(admissions_df, on="HADM_ID", how="left")
-
+    # icu_df = icu_df.join(admissions_df, on="HADM_ID", how="left")
+    
+    
     # ─ pull care-unit if missing ─
     if "FIRST_CAREUNIT" not in icu_df.columns:
         care_cols = ["ICUSTAY_ID", "FIRST_CAREUNIT", "LAST_CAREUNIT"]
@@ -164,10 +162,10 @@ def main(data_dir: str):
     empty_value = events_mem.filter(pl.col("VALUENUM").is_null())
     print(f"[debug] {len(empty_value)} rows with null VALUENUM")
 
-    # overwrite the ICU metadata CSV with the new columns
-    icu_df.write_csv(icu_csv)
+    # # overwrite the ICU metadata CSV with the new columns
+    # icu_df.write_csv(icu_csv)
     
-    out_root = root / "processed_icu"
+    out_root = root / "../processed_icu"
     out_root.mkdir(exist_ok=True)
     required = {"dynamic.csv", "diagnoses.csv", "demo.csv"}
     
@@ -221,6 +219,5 @@ def main(data_dir: str):
 
 # ═════════════════════ entry point ══════════════════════════════════════════
 if __name__ == "__main__":
-    if len(sys.argv) != 2:
-        sys.exit("Usage: python mimic_iii_process.py <mimic_iii_dir>")
-    main(sys.argv[1])
+    mimic_data_dir = '/cluster/work/scaimed/users/wguo/datasets/mimiciii/1.4/'
+    main(mimic_data_dir)

@@ -8,6 +8,7 @@
 
 import os
 import pandas as pd
+from tqdm import tqdm
 
 def generate_seqlen_file(folder_path: str, split_name: str) -> None:
     ids_path = os.path.join(folder_path, f"../../data/mimiciii1.4/train_test_val_split/{split_name}_ids.csv")
@@ -15,7 +16,8 @@ def generate_seqlen_file(folder_path: str, split_name: str) -> None:
 
     ids = pd.read_csv(ids_path)
     with open(output_path, 'w') as f_out:
-        for _, row in ids.iterrows():
+        for _, row in tqdm(ids.iterrows(), total=len(ids), desc="Writing IDs"):
+        #for _, row in ids.iterrows():
             subject_id = str(row['subject_id'])
             stay_id = str(row['stay_id'])
 
