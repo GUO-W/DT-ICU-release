@@ -72,22 +72,54 @@ vs  exps_mimic31_itera, with diff models (set in config).
 
 ## exps_iii
 from exps_mimic31_itera
+# steps:
+- mimic_iii_prepare.py
+- mimic_iii_process.py
+- mimic_iii_split.py
+- make_vocab.py
 
+- data_seqlen_gen.py 
+- (opt) data_seqlen_analy.py to draw len distribution figures
+- train.py (or run.sh)
+- (opt) log_analyze_diff_thres.py for manual tensorboard
+- test_itr.py 
+
+# iii data overview:
+【samples 60373 (orig raw samples 61522, 1149 ICU stays with no valid VALUENUM events )[todo]check 】
+- dyn: [todo]check dim T*122
+    - iii:in(meds), chart, out 
+    -  iv:in(meds), chart, out,  datetimeevents, procedureevents, ingredientevents
+- stat: dim 1, 6984
+- demo:  same with iv
+    - iii:"gender", "race", "insurance", "anchor_age", "admission_type", "icu_type"   # language, marital_status
+    -  iv:"gender", "race", "insurance", "anchor_age", "admission_type", "icu_type"
+
+# dev:
 - mimiciii pipeiline debug:
-    - miss icu_death_labels.csv -- add in mimic_iii_split.py
+    - miss icu_death_labels.csv -- add in mimic_iii_split.py (note:no hadm_id as iv, careful with idx nb)
     - bug: test_ids.csv do not correspond with processed_icu/sub_folders -- debug mimic_iii_process.py
         save path {hadm_id}_{icu_id}"  should be subject_id  (prepare + process 'HADM_ID', split stay_id) lin 178, 121
-    - bug: empty dynamic.csv in many stays -- debug mimic_iii_process.py
-    - still have empty dynamic.csv for some stays after debugging -- reason: in mimic_iii_prepare.py, some stays with 0 dynamic are also kept
+
+    - bug: empty dynamic.csv in many stays 
+        - bugs in mimic_iii_process.py
+        - still have empty dynamic.csv for some stays after debugging process.py -- reason: in mimic_iii_prepare.py, some stays with 0 dynamic are also kept [todo]check
         modified mimic_iii_prepare.py, just keep stays with >0 hours of dymanic data in mimic_iii_icu.csv
         so all the output files of prepare, process, split just contain dyn>0h data.
-    - change: admission merge move from process to prepare, avoid overwrite mimic_iii_icu.csv -- cause pbs when re-run process - and as a result, mimic_iii_split.py and make_vocab.py are also needed to be changed accordingly.
-    - change: modified saving paths
-    - [todo] push code iii to github
-    samples 60373 (orig raw samples 61522, 1149 ICU stays with no valid VALUENUM events )
+        - change: admission merge move from process to prepare, avoid overwrite mimic_iii_icu.csv -- cause pbs when re-run process - and as a result, mimic_iii_split.py and make_vocab.py are also needed to be changed accordingly.
+        - after fixed: samples 60373 (orig raw samples 61522, 1149 ICU stays with no valid VALUENUM events )
 
-- + data_seqlen_gen.py  gen data lens in ./data_seqlen_analy/, for data balancing [todo]
-- [todo]  modify path, run pipeline
+    - make_vocab.py:  1）diff with iv: in iv, dict in ./dict; in iii, csv in ./vocab , and the dict names are different for iv and iii.[modified reading function, but better solution should modify make_vocab.py to align with iv saving format] 2）miss icu_typeDict due to above change of prepare [better solution should be modify prepare to check if "FIRST_CAREUNIT" not in icu_df.columns but not recheck each time of usage]
+    - different from iv, missed value are kept as nan but not zero : replace to zero in dataloader.
+    - modified saving paths
+    - [todo] push code iii to github
+    
+
+- + data_seqlen_gen.py : cal len for each stay (txt files in ./data_seqlen_analy/) and gen train_length_dict.json for data balancing (label + len)
+- modify dataset.py, train.py, util.py， model_poseemb.py 
+    - paths
+    - proc, date, ing
+    - pad_to_bucket_max，n_temporal=3
+
 
 
 

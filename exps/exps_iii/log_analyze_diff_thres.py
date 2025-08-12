@@ -163,11 +163,20 @@ if __name__ == '__main__':
         # {'file': 'log_maxlen480_thres72_bz16_lr1e-5_bceloss.txt', 'thresholds': [0.5]}, # config:  train_max_length = 480, lr1e-5, long-short thres = 72
         # {'file': 'log_maxlen480_thres72_bz16_lr1e-5_bceloss_w_pred0.5.txt', 'thresholds': [0.5]}, # w.pred=true, +_loss=1.0
         # {'file': 'log_maxlen480_thres48_bz16_lr1e-5_bceloss_w_pred0.5.txt', 'thresholds': [0.5]}, 
-        {'file': 'test.txt', 'thresholds': [0.5]},
-        #{'file': 'log_trans.txt', 'thresholds': [0.5]}, 
-        {'file': '../../exps_mimic31_itera_mlp/log/log_mlp.txt', 'thresholds': [0.5]}, 
-        {'file': '../../exps_mimic31_itera_rnn/log/log_rnn.txt', 'thresholds': [0.5]}, 
-        {'file': '../../exps_mimic31_itera_lstm/log/log_lstm.txt', 'thresholds': [0.5]}, 
+
+        # {'file': 'test.txt', 'thresholds': [0.5]}, # exps_mimic31_itera
+        # {'file': '../../exps_mimic31_itera_mlp/log/log_mlp.txt', 'thresholds': [0.5]}, 
+        # {'file': '../../exps_mimic31_itera_rnn/log/log_rnn.txt', 'thresholds': [0.5]}, 
+        # {'file': '../../exps_mimic31_itera_lstm/log/log_lstm.txt', 'thresholds': [0.5]}, 
+
+        ## iii
+        #{'file': 'log_test_same_param_w_iv.txt', 'thresholds': [0.5]}, # pred_loss 
+        #{'file': 'log_predloss1e-3_lr5e-7.txt', 'thresholds': [0.5]},  #log txt overwrote. log/log_anal_log_predloss1e-3_lr5e-7_pred_lossxcfg.model.pred_loss.png. pred_loss = pred_loss * cfg.model.pred_loss
+        
+        # {'file': 'log_predloss1e-6_lr5e-7.txt', 'thresholds': [0.5]}, 
+        # {'file': 'log_debug.txt', 'thresholds': [0.5]},  # css: lr = 1e-4, C.model.pred_loss = 0.5, pred loss change to l1
+        # {'file': 'log_debug_no_pred.txt', 'thresholds': [0.5]}, # vs log_debug.txt, no pred exactly same with above debug.---not reasonable!
+        {'file': 'log_logpredloss.txt', 'thresholds': [0.5]}, # debug: pred loss in log area, norm
     ]
     experiments = {}
     for cfg in log_settings:

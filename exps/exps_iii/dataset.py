@@ -16,7 +16,8 @@ from torch.utils.data import Dataset, Sampler, DataLoader, BatchSampler
 import torch.nn.functional as F
 
 from config import cfg
-from utils import init_read
+from utils import init_read_mimiciii as init_read
+from IPython import embed
 
 
 def custom_collate(batch, min_seq_len=5, max_seq_len=None):
@@ -223,7 +224,7 @@ class MimicDataset(Dataset):
         self.labels = labels
         self.data_icu = data_icu
 
-        self.root_path = root_dir + "/data/mimiciv3.1/processed_icu/"
+        self.root_path = root_dir + "/data/mimiciii1.4/processed_icu/"
         self.gender_vocab = gender_vocab
         self.race_vocab = race_vocab
         self.insurance_vocab = insurance_vocab
@@ -244,9 +245,14 @@ class MimicDataset(Dataset):
         stat = pd.read_csv(f"{file_path}/diagnoses.csv", header=0)
         demo = pd.read_csv(f"{file_path}/demo.csv", header=0) # gender, anchor_age, insurance, race; icu_type, admission_type, patientweight; language, marital_status
 
+        # print(f" ...... Rows: {len(dyn)}, Columns: {len(dyn.columns)}")  #Rows: T, Columns: 122
+        # print(f" ...... Rows: {len(stat)}, Columns: {len(stat.columns)}")  #Rows: 1, Columns: 6984
+
         # # Replace demographic values based on vocab_data
         demo["gender"].replace(self.gender_vocab, inplace=True)
         demo["race"].replace(self.race_vocab, inplace=True)
+        # mimiciii: avoid "Private"
+        demo["insurance"] = demo["insurance"].str.upper()
         demo["insurance"].replace(self.insurance_vocab, inplace=True)
         demo["admission_type"].replace(self.admission_vocab, inplace=True)
         demo["icu_type"].replace(self.icu_vocab, inplace=True)
@@ -295,18 +301,17 @@ class MimicDataset(Dataset):
         # Load static data
         stat = torch.tensor(stat).float()
 
-        # Load demographic data (and handle missing values)
+        # Load demographic data
+        #print(demo)
         demo = torch.tensor(demo).float()
 
         # Load label y
-        # y = label
         y = self.labels[self.labels["stay_id"] == sample]["icu_death"].iloc[0]
 
         y = torch.tensor(int(y)).reshape(-1).long()
 
         assert meds.shape[0] == chart.shape[0] == out.shape[0], "number of frames must be equal!! if you see this error, that means your data preprocessing has some issues.."
         outputs = [meds, chart, out, stat, demo, y]
-        outputs = [i for i in outputs]
         return outputs
 
     def __getitem__(self, idx):
@@ -315,6 +320,8 @@ class MimicDataset(Dataset):
         path = self.root_path + str(id[0]) + "_" + str(id[1])
         dyn, stat, demo = self.process_file(path)
         outputs = self.get_sample(dyn, stat, demo, sample)
+        #print("...out", outputs[0].shape, outputs[1].shape, outputs[2].shape, outputs[3].shape, outputs[4].shape, outputs[5].shape)
+        ## ...out torch.Size([T, 55]) torch.Size([T, 57]) torch.Size([T, 10]) torch.Size([6984]) torch.Size([6]) torch.Size([1])
         return outputs
 
 class data_config:
@@ -327,6 +334,7 @@ class data_config:
 
 def build_datasets(train_hids, val_hids, test_hids, labels, data_config, root_dir):
     race_vocab, gender_vocab, insurance_vocab, admission_vocab, icu_vocab = init_read(root_dir)
+    #print(insurance_vocab)
     train_dataset_length_info = json.load(open("./data_seqlen_analy/train_length_dict.json", "r"))
     val_dataset_length_info, test_dataset_length_info = build_val_test_length_info_dict(data_config)
 
@@ -386,13 +394,13 @@ def build_datasets(train_hids, val_hids, test_hids, labels, data_config, root_di
     return train_dataset, val_dataset, test_dataset
 
 
-def pad_to_bucket_max(batch, boundaries=[0], pad_value=0.0, n_temporal=6):
+def pad_to_bucket_max(batch, boundaries=[0], pad_value=0.0, n_temporal=3):
     # ------------------------------------------------------------
     B = len(batch)
     # transpose list‑of‑tuples -> tuple‑of‑lists
-    cols = list(zip(*batch))        # len == 9
+    cols = list(zip(*batch))        # len == 6
 
-    # ---------- STEP 1: pad the 6 temporal tensors --------------
+    # ---------- STEP 1: pad the 3 temporal tensors --------------
     ts_list = cols[:n_temporal]
     T_lengths = [ts.shape[0] for ts in ts_list[0]]      # len per sample via ts₁
     buckets = [bisect.bisect_right(boundaries, L) for L in T_lengths]
@@ -402,7 +410,29 @@ def pad_to_bucket_max(batch, boundaries=[0], pad_value=0.0, n_temporal=6):
     padded_tensors = []
 
     for k, ts_col in enumerate(ts_list):
-        seqs = [torch.as_tensor(t) for t in ts_col]     # each (T, Dₖ)
+        #seqs = [torch.as_tensor(t) for t in ts_col]     # each (T, Dₖ)       
+        # seqs = [torch.as_tensor(np.nan_to_num(t, nan=0)) for t in ts_col]
+        seqs = []
+        for i, t in enumerate(ts_col):
+            arr = np.asarray(t)
+            arr = np.nan_to_num(arr, nan=0.0)
+
+            # fix shape: ensure it's 2D (T, D)
+            if arr.ndim == 1:
+                arr = arr[:, None]     # shape (T,) → (T, 1)
+            elif arr.ndim == 0:
+                arr = np.zeros((1, 1))  # empty scalar → (1, 1)
+
+            if arr.ndim != 2:
+                print(f"[WARN] Unexpected shape in ts_col[{i}]: {arr.shape}, content: {arr}")
+                arr = np.zeros((1, 1))
+
+            seqs.append(torch.as_tensor(arr, dtype=torch.float32))
+
+        # if len(seqs) == 0 or len(seqs[0].shape) < 2:
+        #     print(torch.stack(seqs).mean().item(), torch.all(torch.stack(seqs) == 0).item(),seqs[0].shape )
+        #     raise ValueError(f"Invalid seq shape: {[x.shape for x in seqs]}")
+
         D_k  = seqs[0].shape[1]
 
         padded = torch.stack([
@@ -492,7 +522,7 @@ def build_dataloaders(train_dataset, val_dataset, test_dataset, data_config, tra
         train_dataset,
         batch_sampler=train_batch_sampler,
         collate_fn=lambda b: pad_to_bucket_max(b, boundaries=[cfg.long_short_threshold]),
-        num_workers=cfg.num_workers,
+        num_workers= cfg.num_workers,
     )
     val_loader = DataLoader(
         val_dataset,
@@ -511,8 +541,8 @@ def build_dataloaders(train_dataset, val_dataset, test_dataset, data_config, tra
 
 def load_trainval_data():
     labels = pd.read_csv(cfg.root_dir +  "/data/mimiciii1.4/icu_death_labels.csv", header=0)
-    stay_id = labels.iloc[:, 2]
-    death_label = labels.iloc[:, 3]
+    stay_id = labels.iloc[:, 1]
+    death_label = labels.iloc[:, 2]
     print("Total Samples", len(stay_id))
     print("Positive Samples", death_label.sum())
     print("Negative Samples", len(death_label) - death_label.sum())
@@ -553,10 +583,10 @@ def load_trainval_data():
     #    train_ids = pd.read_csv(cfg.root_dir +  "/data/mimiciv3.1/train_test_val_split/train_ids.csv", header=0)
     #    train_ids = train_ids.iloc[:, :2].values.tolist()
 
-    train_ids = pd.read_csv(cfg.root_dir +  "/data/mimiciv3.1/train_test_val_split/train_ids.csv", header=0)
+    train_ids = pd.read_csv(cfg.root_dir +  "/data/mimiciii1.4/train_test_val_split/train_ids.csv", header=0)
     train_ids = train_ids.iloc[:, :2].values.tolist()
-    test_ids = pd.read_csv(cfg.root_dir +  "/data/mimiciv3.1/train_test_val_split/test_ids.csv", header=0)
+    test_ids = pd.read_csv(cfg.root_dir +  "/data/mimiciii1.4/train_test_val_split/test_ids.csv", header=0)
     test_ids = test_ids.iloc[:, :2].values.tolist()
-    val_ids = pd.read_csv(cfg.root_dir +  "/data/mimiciv3.1/train_test_val_split/val_ids.csv", header=0)
+    val_ids = pd.read_csv(cfg.root_dir +  "/data/mimiciii1.4/train_test_val_split/val_ids.csv", header=0)
     val_ids = val_ids.iloc[:, :2].values.tolist()
     return train_ids, val_ids, test_ids, labels

@@ -4,6 +4,7 @@ import torch.nn.functional as F
 # import numpy as np
 import math
 # from parameters import *
+from IPython import embed
 
 class DTmodel(nn.Module): # Transformer our model v1.0
     def __init__(
@@ -19,17 +20,13 @@ class DTmodel(nn.Module): # Transformer our model v1.0
         super(DTmodel, self).__init__()
 
         self.stat_vocab_size = data_config.stat_vocab_size
-        self.proc_vocab_size = data_config.proc_vocab_size
+        self.proc_vocab_size = None #data_config.proc_vocab_size
         self.med_vocab_size = data_config.med_vocab_size
         self.out_vocab_size = data_config.out_vocab_size
         self.chart_vocab_size = data_config.chart_vocab_size
-        self.date_vocab_size = data_config.date_vocab_size
-        self.ing_vocab_size = data_config.ing_vocab_size
-        # self.eth_vocab_size = data_config.eth_vocab_size
-        # self.gender_vocab_size = data_config.gender_vocab_size
-        # self.age_vocab_size = data_config.age_vocab_size
-        # self.ins_vocab_size = data_config.ins_vocab_size
-        # self.modalities = data_config.modalities
+        self.date_vocab_size = None #data_config.date_vocab_size
+        self.ing_vocab_size = None #data_config.ing_vocab_size
+        
         self.embed_size = embed_size
         self.latent_size = latent_size
         self.pred = pred
@@ -51,25 +48,25 @@ class DTmodel(nn.Module): # Transformer our model v1.0
             self.out = nn.Linear(self.out_vocab_size, self.latent_size)
             self.atten_embed_size += self.latent_size
             self.pred_size += self.out_vocab_size
-        if self.proc_vocab_size:
-            self.proc = nn.Linear(self.proc_vocab_size, self.latent_size)
-            self.atten_embed_size += self.latent_size
-            self.pred_size += self.proc_vocab_size
-        if self.date_vocab_size:
-            self.date = nn.Linear(self.date_vocab_size, self.latent_size)
-            self.atten_embed_size += self.latent_size
-            self.pred_size += self.date_vocab_size
-        if self.ing_vocab_size:
-            self.ing = nn.Linear(self.ing_vocab_size, self.latent_size)
-            self.atten_embed_size += self.latent_size
-            self.pred_size += self.ing_vocab_size
+        # if self.proc_vocab_size:
+        #     self.proc = nn.Linear(self.proc_vocab_size, self.latent_size)
+        #     self.atten_embed_size += self.latent_size
+        #     self.pred_size += self.proc_vocab_size
+        # if self.date_vocab_size:
+        #     self.date = nn.Linear(self.date_vocab_size, self.latent_size)
+        #     self.atten_embed_size += self.latent_size
+        #     self.pred_size += self.date_vocab_size
+        # if self.ing_vocab_size:
+        #     self.ing = nn.Linear(self.ing_vocab_size, self.latent_size)
+        #     self.atten_embed_size += self.latent_size
+        #     self.pred_size += self.ing_vocab_size
         if self.stat_vocab_size:
             self.stat = nn.Linear(self.stat_vocab_size, self.latent_size)
             self.cross_embed_size += self.latent_size
 
         self.atten0 = TransformerBlock(self.atten_embed_size)
         self.adapter = nn.Linear(
-            self.latent_size * 6 + self.cross_embed_size, self.atten_embed_size
+            self.latent_size * 6 + self.cross_embed_size, self.atten_embed_size # 6 demo + 1 stat
         )
         # self.atten1 = TransformerBlock(self.atten_embed_size)
         self.cross_attn = CrossAttention(self.atten_embed_size)
@@ -77,7 +74,11 @@ class DTmodel(nn.Module): # Transformer our model v1.0
         # self.global_embedding = nn.Parameter(torch.randn(1, 1, self.atten_embed_size))
         self.fc = nn.Linear(self.atten_embed_size, 1)
         if self.pred:
-            self.fc2 = nn.Linear(self.atten_embed_size, self.pred_size)
+            self.fc2 = nn.Sequential(
+            nn.Linear(self.atten_embed_size, self.atten_embed_size),
+            nn.SiLU(),
+            nn.Linear(self.atten_embed_size, self.pred_size)
+        )
         self.eps = eps
 
     def set_mean_std(self, mean, std):
@@ -91,21 +92,22 @@ class DTmodel(nn.Module): # Transformer our model v1.0
         self.out_mean = mean["out"]
         self.out_std = std["out"]
 
-        self.proc_mean = mean["proc"]
-        self.proc_std = std["proc"]
+        # self.proc_mean = mean["proc"]
+        # self.proc_std = std["proc"]
 
-        self.date_mean = mean["date"]
-        self.date_std = std["date"]
+        # self.date_mean = mean["date"]
+        # self.date_std = std["date"]
 
-        self.ing_mean = mean["ing"]
-        self.ing_std = std["ing"]
+        # self.ing_mean = mean["ing"]
+        # self.ing_std = std["ing"]
 
         self.stat_mean = mean["stat"]
         self.stat_std = std["stat"]
         self.norm_data = True
 
     def reshape_pred(self, pred):
-        shapes = torch.tensor([0, self.med_vocab_size, self.chart_vocab_size, self.out_vocab_size, self.proc_vocab_size, self.date_vocab_size, self.ing_vocab_size])
+        #shapes = torch.tensor([0, self.med_vocab_size, self.chart_vocab_size, self.out_vocab_size, self.proc_vocab_size, self.date_vocab_size, self.ing_vocab_size])
+        shapes = torch.tensor([0, self.med_vocab_size, self.chart_vocab_size, self.out_vocab_size])
         shapes = torch.cumsum(shapes, dim=0)
         # means = [self.med_mean, self.chart_mean, self.out_mean, self.proc_mean, self.date_mean, self.ing_mean]
         # stds = [self.med_std, self.chart_std, self.out_std, self.proc_std, self.date_std, self.ing_std]
@@ -116,7 +118,7 @@ class DTmodel(nn.Module): # Transformer our model v1.0
             outputs.append(ins)
         return outputs
 
-    def forward(self, meds, chart, out, proc, date, ing, stat, demo, key_padding_mask):
+    def forward(self, meds, chart, out, stat, demo, key_padding_mask):
         out1 = torch.zeros(size=(0, 0))
 
         if self.med_vocab_size:
@@ -143,36 +145,36 @@ class DTmodel(nn.Module): # Transformer our model v1.0
                 out1 = torch.cat((out1, outEmbedded), 2)
             else:
                 out1 = outEmbedded
-        if self.proc_vocab_size:
-            if self.norm_data:
-                proc = (proc - self.proc_mean) / (self.proc_std + self.eps)
-            procEmbedded = self.proc(proc)
-            if out1.nelement():
-                out1 = torch.cat((out1, procEmbedded), 2)
-            else:
-                out1 = procEmbedded
-        if self.date_vocab_size:
-            if self.norm_data:
-                date = (date - self.date_mean) / (self.date_std + self.eps)
-            dateEmbedded = self.date(date)
-            if out1.nelement():
-                out1 = torch.cat((out1, dateEmbedded), 2)
-            else:
-                out1 = dateEmbedded
-        if self.ing_vocab_size:
-            if self.norm_data:
-                ing = (ing - self.ing_mean) / (self.ing_std + self.eps)
-            ingEmbedded = self.ing(ing)
-            if out1.nelement():
-                out1 = torch.cat((out1, ingEmbedded), 2)
-            else:
-                out1 = ingEmbedded
+        # if self.proc_vocab_size:
+        #     if self.norm_data:
+        #         proc = (proc - self.proc_mean) / (self.proc_std + self.eps)
+        #     procEmbedded = self.proc(proc)
+        #     if out1.nelement():
+        #         out1 = torch.cat((out1, procEmbedded), 2)
+        #     else:
+        #         out1 = procEmbedded
+        # if self.date_vocab_size:
+        #     if self.norm_data:
+        #         date = (date - self.date_mean) / (self.date_std + self.eps)
+        #     dateEmbedded = self.date(date)
+        #     if out1.nelement():
+        #         out1 = torch.cat((out1, dateEmbedded), 2)
+        #     else:
+        #         out1 = dateEmbedded
+        # if self.ing_vocab_size:
+        #     if self.norm_data:
+        #         ing = (ing - self.ing_mean) / (self.ing_std + self.eps)
+        #     ingEmbedded = self.ing(ing)
+        #     if out1.nelement():
+        #         out1 = torch.cat((out1, ingEmbedded), 2)
+        #     else:
+        #         out1 = ingEmbedded
 
         # Self attention
         # bs = out1.shape[0]
         # global_embedding = self.global_embedding.repeat(bs, 1, 1)
         # out1 = torch.cat([out1, global_embedding], 1)
-        out1 = self.atten0(out1, out1, out1, key_padding_mask=key_padding_mask)
+        out1 = self.atten0(out1, out1, out1, key_padding_mask=key_padding_mask) #torch.Size([16, 40, 768] 256*3
 
         gender = timestep_embedding(
             demo[:, 0] * self.guidance_scale, self.latent_size
@@ -206,9 +208,10 @@ class DTmodel(nn.Module): # Transformer our model v1.0
 
         if self.stat_vocab_size:
             if self.norm_data:
-                stat = (stat - self.stat_mean) / (self.stat_std + self.eps)
-            stat = self.stat(stat).unsqueeze(1)
-            out2 = torch.cat((out2, stat), 2)
+                stat = (stat - self.stat_mean) / (self.stat_std + self.eps) # [16, 6984]
+
+            stat = self.stat(stat).unsqueeze(1) #[16, 1, 256] 
+            out2 = torch.cat((out2, stat), 2) # 256*6+256 -> [16, 1, 1792]
 
         out2 = self.adapter(out2)
         # out2 = self.atten1(out2, out2, out2)
@@ -218,7 +221,8 @@ class DTmodel(nn.Module): # Transformer our model v1.0
         logit = self.fc(out)
 
         if self.pred:
-            pred = self.fc2(out)
+            pred = torch.nn.functional.relu(self.fc2(out)) * 10.0
+            # pred = self.fc2(out) * 10.0
             pred = self.reshape_pred(pred)
             out = F.sigmoid(logit)
             return out, logit, pred

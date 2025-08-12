@@ -63,7 +63,7 @@ C.seed = 42
 C.k_fold = int(5)
 
 C.batch_size = 16
-C.test_batch_size = 16 # 128
+C.test_batch_size = 16 
 C.num_epochs = 20
 C.patience = 5
 C.num_workers = 20
@@ -71,9 +71,9 @@ C.num_workers = 20
 C.train_min_length = 4 # 72
 C.train_max_length = 480
 
-C.lrn_rate = 5e-7 #1e-5
+C.lrn_rate = 1e-5 # 5e-7 #1e-5
 C.warmup_epochs = 2
-C.grad_accum_steps = 16
+C.grad_accum_steps = 4 # 6
 
 C.test_input_min_length = 4 # 12
 C.test_pos_threshold = 0.9
@@ -87,7 +87,7 @@ C.val_size = 0.1
 C.model = edict()
 
 C.model.pred = True
-C.model.pred_loss = 0.5
+C.model.pred_loss = 1.0 # 0.5 # 1e-6 #1e-3 #0.5
 C.model.posemb = True # False
 
 C.model.embedding_size = 64

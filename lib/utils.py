@@ -5,6 +5,8 @@ import pickle
 from typing import Optional
 from tqdm import tqdm
 import os
+import pandas as pd
+
 
 def fix_seed(seed=42):
     random.seed(seed)
@@ -256,6 +258,30 @@ def get_data_mean_std(
     #print(means)
     #print(stds)
     return means, stds
+
+
+def init_read_mimiciii(root_dir):
+    csv_dir = root_dir + "/data/mimiciii1.4/dict/"
+    
+    race = pd.read_csv(csv_dir+ "race.csv")
+    ethVocabDict = dict(zip(race["value"].str.upper(), race["index"]))
+    gend = pd.read_csv(csv_dir+ "gender.csv")
+    genderVocabDict = dict(zip(gend["value"].str.upper(), gend["index"]))
+    ins = pd.read_csv(csv_dir+ "insurance.csv")
+    insVocabDict = dict(zip(ins["value"].str.upper(), ins["index"]))
+    adm = pd.read_csv(csv_dir+ "admission_type.csv")
+    admVocabDict = dict(zip(adm["value"].str.upper(), adm["index"]))
+    icu = pd.read_csv(csv_dir+ "icu_type.csv")
+    icuVocabDict = dict(zip(icu["value"].str.upper(), icu["index"]))
+
+
+    return (
+        ethVocabDict,
+        genderVocabDict,
+        insVocabDict,
+        admVocabDict,
+        icuVocabDict,
+    )
 
 
 def init_read(root_dir):

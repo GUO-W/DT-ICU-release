@@ -98,8 +98,8 @@ class Loss(nn.Module):
             pred_loss = 0.0
             for pred, gt_pred in zip(preds, gt_preds):
                 pred_loss += self.l2_loss(pred, gt_pred)
+            #pred_loss = pred_loss * cfg.model.pred_loss
             total_loss = classify_loss + pred_loss * cfg.model.pred_loss
-
         # Output the results
         print("Mode: ", mode)
         print("BCE Loss: {:.2f}".format(classify_loss))
