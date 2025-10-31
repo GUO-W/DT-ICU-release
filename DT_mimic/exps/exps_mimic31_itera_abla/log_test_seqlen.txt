@@ -1,0 +1,146 @@
+total modalities: 6
+Total Samples 94458
+Positive Samples 7364
+Negative Samples 87094
+Building dataset for  test
+Loaded model from snapshot_epoch19.pth (saved epoch 19)
+======= TESTING ========
+test_length:  4
+Mode:  train
+BCE Loss: 0.40
+AU-ROC: 0.93
+AU-PRC: 0.67
+AU-PRC Baseline: 0.12
+Accuracy: 0.84
+Precision: 0.42
+Recall: 0.88
+Specificity: 0.84
+NPV: 0.98
+ECE: 0.18
+MCE: 0.53
+======= TESTING ========
+test_length:  8
+Mode:  train
+BCE Loss: 0.28
+AU-ROC: 0.95
+AU-PRC: 0.73
+AU-PRC Baseline: 0.12
+Accuracy: 0.90
+Precision: 0.56
+Recall: 0.87
+Specificity: 0.91
+NPV: 0.98
+ECE: 0.11
+MCE: 0.44
+======= TESTING ========
+test_length:  12
+Mode:  train
+BCE Loss: 0.20
+AU-ROC: 0.97
+AU-PRC: 0.77
+AU-PRC Baseline: 0.12
+Accuracy: 0.94
+Precision: 0.68
+Recall: 0.89
+Specificity: 0.94
+NPV: 0.98
+ECE: 0.06
+MCE: 0.32
+======= TESTING ========
+test_length:  24
+Mode:  train
+BCE Loss: 0.13
+AU-ROC: 0.97
+AU-PRC: 0.83
+AU-PRC Baseline: 0.12
+Accuracy: 0.95
+Precision: 0.79
+Recall: 0.80
+Specificity: 0.97
+NPV: 0.97
+ECE: 0.02
+MCE: 0.12
+======= TESTING ========
+test_length:  36
+Mode:  train
+BCE Loss: 0.14
+AU-ROC: 0.97
+AU-PRC: 0.82
+AU-PRC Baseline: 0.12
+Accuracy: 0.95
+Precision: 0.76
+Recall: 0.84
+Specificity: 0.96
+NPV: 0.98
+ECE: 0.02
+MCE: 0.17
+======= TESTING ========
+test_length:  48
+Mode:  train
+BCE Loss: 0.13
+AU-ROC: 0.98
+AU-PRC: 0.84
+AU-PRC Baseline: 0.12
+Accuracy: 0.95
+Precision: 0.80
+Recall: 0.79
+Specificity: 0.97
+NPV: 0.97
+ECE: 0.01
+MCE: 0.13
+======= TESTING ========
+test_length:  60
+Mode:  train
+BCE Loss: 0.14
+AU-ROC: 0.98
+AU-PRC: 0.83
+AU-PRC Baseline: 0.12
+Accuracy: 0.95
+Precision: 0.75
+Recall: 0.85
+Specificity: 0.96
+NPV: 0.98
+ECE: 0.03
+MCE: 0.18
+======= TESTING ========
+test_length:  72
+Mode:  train
+BCE Loss: 0.14
+AU-ROC: 0.97
+AU-PRC: 0.82
+AU-PRC Baseline: 0.12
+Accuracy: 0.95
+Precision: 0.76
+Recall: 0.85
+Specificity: 0.96
+NPV: 0.98
+ECE: 0.03
+MCE: 0.16
+======= TESTING ========
+test_length:  84
+Mode:  train
+BCE Loss: 0.15
+AU-ROC: 0.97
+AU-PRC: 0.82
+AU-PRC Baseline: 0.12
+Accuracy: 0.94
+Precision: 0.72
+Recall: 0.86
+Specificity: 0.95
+NPV: 0.98
+ECE: 0.04
+MCE: 0.22
+======= TESTING ========
+test_length:  96
+Mode:  train
+BCE Loss: 0.16
+AU-ROC: 0.97
+AU-PRC: 0.82
+AU-PRC Baseline: 0.12
+Accuracy: 0.94
+Precision: 0.72
+Recall: 0.86
+Specificity: 0.95
+NPV: 0.98
+ECE: 0.04
+MCE: 0.26

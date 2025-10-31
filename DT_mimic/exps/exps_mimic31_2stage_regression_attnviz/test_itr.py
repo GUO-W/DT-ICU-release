@@ -1,0 +1,239 @@
+#!/usr/bin/env python
+# encoding: utf-8
+
+import os
+import argparse
+import torch
+from config import cfg
+from dataset import LengthAwareBalancedBatchSampler, data_config, pad_to_bucket_max, build_val_test_length_info_dict, load_trainval_data, MimicDataset
+from utils import init_read
+from torch.utils.data import Dataset, Sampler, DataLoader, BatchSampler
+from tqdm import tqdm
+import numpy as np
+
+def load_model_for_test(model, cfg, epoch):
+    snapshot_path = os.path.join(cfg.snapshot_dir, f"snapshot_epoch{epoch}.pth")
+    if not os.path.exists(snapshot_path):
+        raise FileNotFoundError(f"❌ Snapshot not found at {snapshot_path}. Please check --epoch parameter.")
+    
+    checkpoint = torch.load(snapshot_path, map_location='cpu')  # Change to 'cuda' if needed
+    model.load_state_dict(checkpoint['model_state_dict'])
+    print(f"Loaded model from {snapshot_path} (saved epoch {checkpoint['epoch']})")
+    return model
+
+def parse_args():
+    parser = argparse.ArgumentParser(description="Testing Script")
+    parser.add_argument('--epoch', type=int, default=19,
+                        help='Which epoch snapshot to load (default: 10)')
+    args = parser.parse_args()
+    return args
+
+
+def rescale_iou(x, c=6):
+    # map 0.5 to 0.1
+    # increase sharply after 0.5
+    # increase smoothly after 0.6
+    k = 4 / (0.5**c)
+    return x / (1 + k * (1 - x)**c)
+
+# def cal_precision(pred, gt):
+#     precision = torch.abs(pred - gt) / (torch.abs(pred) + torch.abs(gt) + 1e-8)
+#     return 1 - precision.mean()
+
+def cal_precision(pred, gt):
+    pred = pred.int()
+    gt = gt.int()
+    pos_p = ((pred == 1) & (gt == 1)).sum()  # True Positives (TP)
+    neg_p = ((pred == 0) & (gt == 0)).sum()  # True Negatives (TN)
+    fn = ((pred == 0) & (gt == 1)).sum()  # False Negatives (FN)
+    fp = ((pred == 1) & (gt == 0)).sum()  # False Positives (FP)
+    if (pos_p + fn) > 0:
+        recall = pos_p / (pos_p + fn)
+    else:
+        if gt.sum() > 0:
+            recall = torch.tensor(0)
+        else:
+            recall = torch.tensor(1)
+    return recall
+
+# def cal_precision(pred, gt):
+#     mask = gt != 0
+#     mask_ = gt == 0
+#     # pred = (pred > 0).int()
+#     pred[pred > 0] = 1
+#     pred[pred <= 0] = 0
+#     # gt = (gt > 0).int()
+#     gt[gt > 0] = 1
+#     gt[gt <= 0] = 0
+#     precision = torch.abs(pred[mask] - gt[mask]) / (torch.abs(pred[mask]) + torch.abs(gt[mask]) + 1e-8)
+#     precision_ = torch.abs(pred[mask_] - gt[mask_]) / (torch.abs(pred[mask_]) + torch.abs(gt[mask_]) + 1e-8)
+#     precision = 1 - precision.mean()
+#     precision_ = 1 - precision_.mean()
+#     print("non zero precision:", precision)
+#     print("zero precision:", precision_)
+#     return (mask_.sum() * precision + mask.sum() * precision_) / (mask.sum() + mask_.sum())
+
+def format_pred(value, logit, threshold=0.5):
+    click_prob = torch.sigmoid(logit)   # [0, 1] probability
+    # Apply threshold to decide whether to keep regression output
+    # print(click_prob, threshold)
+    pred_value = torch.where(
+        click_prob > threshold,
+        torch.nn.functional.relu(value),   # allow only positive predictions
+        torch.zeros_like(value)
+    )
+    # return pred_value
+    return (click_prob > threshold).int()
+
+@torch.no_grad()
+def test(model, test_loader):
+    print("======= TESTING ========")
+    precisions = []
+    recalls = []
+
+    input_min_length = cfg.test_input_min_length
+    max_pred_length_ratio = cfg.test_max_pred_length_ratio
+
+    for step, batch in enumerate(tqdm(test_loader)):
+        gt_meds, gt_chart, gt_out, gt_proc, gt_date, gt_ing, stat, demo, Y = batch
+        if gt_meds.shape[1] <= input_min_length:
+            continue
+        #print(gt_meds.shape)
+        max_pred_length = max_pred_length_ratio * gt_meds.shape[1]
+        meds = gt_meds[:, :input_min_length].cuda()
+        chart = gt_chart[:, :input_min_length].cuda()
+        out = gt_out[:, :input_min_length].cuda()
+        proc = gt_proc[:, :input_min_length].cuda()
+        date = gt_date[:, :input_min_length].cuda()
+        ing = gt_ing[:, :input_min_length].cuda()
+        stat = stat.cuda()
+        demo = demo.cuda()
+        input_list = [meds, chart, out, proc, date, ing]
+        output_list = [meds, chart, out, proc, date, ing]
+        gt_list = [gt_meds, gt_chart, gt_out, gt_proc, gt_date, gt_ing]
+        skip_indexes = set([0, 3, 4, 5])
+        map_indexes = {1:0, 2:1}
+        stop_pred = False
+        while meds.shape[1] < max_pred_length and not stop_pred:
+
+            meds, chart, out, proc, date, ing = input_list
+            output, logits, preds_value, preds_logit = model(
+                meds, chart, out, proc, date, ing, stat, demo, None
+            )
+            print(output.squeeze().item())
+            if output.squeeze().item() > cfg.test_pos_threshold or meds.shape[1] >= gt_meds.shape[1]:
+            # if meds.shape[1] >= gt_meds.shape[1]:
+                stop_pred = True
+
+            for i in range(len(input_list)):
+                # if i in skip_indexes:
+                input_list[i] = torch.cat([input_list[i], gt_list[i][:, meds.shape[1]:meds.shape[1]+1].cuda()], dim=1)
+                if i not in skip_indexes:
+                # else:
+                    new_index = map_indexes[i]
+                    final_pred = format_pred(preds_value[new_index], preds_logit[new_index], 0.1)
+                    # print("preds_value:", preds_value[new_index], "preds_logit:", torch.sigmoid(preds_logit[new_index]))
+                    output_list[i] = torch.cat([output_list[i], final_pred], dim=1)
+
+        #print(gt_meds.shape[1], input_list[0].shape[1])
+        iou = min(gt_meds.shape[1] - input_min_length, input_list[0].shape[1] - input_min_length) / max(gt_meds.shape[1] - input_min_length, input_list[0].shape[1] - input_min_length)
+        print("iou:", iou)
+        recall = rescale_iou(iou)
+        print("Recall: ", recall)
+        recalls.append(recall)
+
+        # precision_min_length = min(gt_meds.shape[1] - input_min_length, input_list[0].shape[1] - input_min_length)
+        # precision = 0
+        # for i in range(len(output_list)):
+        #     if i not in skip_indexes:
+        #         # print(batch[i].shape)
+        #         # print(output_list[i][:, input_min_length:input_min_length + precision_min_length].mean(), output_list[i][:, input_min_length:input_min_length + precision_min_length].max(), output_list[i][:, input_min_length:input_min_length + precision_min_length].min())
+        #         # print(batch[i][:, input_min_length:input_min_length + precision_min_length].mean(), batch[i][:, input_min_length:input_min_length + precision_min_length].max(), batch[i][:, input_min_length:input_min_length + precision_min_length].min())
+        #         precision += cal_precision(output_list[i].detach().cpu()[:, input_min_length:input_min_length + precision_min_length], batch[i][:, input_min_length:input_min_length + precision_min_length])
+        #         # precision += cal_precision(batch[i][:, input_min_length:input_min_length + precision_min_length], batch[i][:, input_min_length:input_min_length + precision_min_length])
+        #         # precision += cal_precision(input_list[i].detach().cpu()[:, input_min_length:input_min_length + precision_min_length] * 0, batch[i][:, input_min_length:input_min_length + precision_min_length])
+
+        # precision = precision.item() / (len(output_list) - len(skip_indexes))
+        # print("Precision: ", precision)
+        # precisions.append(precision)
+
+        torch.cuda.empty_cache()
+
+    return precisions, recalls
+
+
+if __name__ == "__main__":
+    args = parse_args()
+    epoch_to_load = args.epoch
+
+    # build model
+    if cfg.model.posemb:
+        from model_posemb import DTmodel
+    else:
+        from model import DTmodel
+
+    # build test set
+    modalities = (
+        cfg.med_flag
+        + cfg.chart_flag
+        + cfg.out_flag
+        + cfg.proc_flag
+        + cfg.date_flag
+        + cfg.ing_flag
+    )
+    print("total modalities:", modalities)
+    datacfg = data_config(cfg.data_icu, modalities, cfg.train_min_length, cfg.train_max_length, train=True)
+    train_ids, val_ids, test_ids, labels = load_trainval_data()
+
+    race_vocab, gender_vocab, insurance_vocab, admission_vocab, icu_vocab = init_read(cfg.root_dir)
+    _, test_dataset_length_info = build_val_test_length_info_dict(datacfg)
+
+    test_ids_new = []
+    test_seq_lengths = []
+    for id in test_ids:
+        newid = str(id[1])
+        if newid in test_dataset_length_info:
+            test_ids_new.append(id)
+            test_seq_lengths.append(int(test_dataset_length_info[newid]))
+
+    test_dataset = MimicDataset(
+        "test",
+        test_ids_new,
+        labels,
+        datacfg.data_icu,
+        root_dir=cfg.root_dir,
+        gender_vocab=gender_vocab,
+        race_vocab=race_vocab,
+        insurance_vocab=insurance_vocab,
+        admission_vocab=admission_vocab,
+        icu_vocab=icu_vocab,
+    )
+
+    meds, chart, out, proc, date, ing, stat, _, _ = test_dataset[0]
+    datacfg.stat_vocab_size = stat.shape[-1]
+    datacfg.proc_vocab_size = proc.shape[-1]
+    datacfg.med_vocab_size = meds.shape[-1]
+    datacfg.out_vocab_size = out.shape[-1]
+    datacfg.chart_vocab_size = chart.shape[-1]
+    datacfg.date_vocab_size = date.shape[-1]
+    datacfg.ing_vocab_size = ing.shape[-1]
+
+    test_loader = DataLoader(
+        test_dataset,
+        batch_size=1,
+        num_workers=cfg.num_workers,
+        shuffle=False,
+    )
+
+    model = DTmodel(datacfg, embed_size=cfg.model.embedding_size, latent_size=cfg.model.latent_size, pred=cfg.model.pred)
+    if cfg.device != "cpu":
+        model = model.cuda()
+
+    # load model 
+    model = load_model_for_test(model, cfg, epoch_to_load)
+    model.eval()
+
+    # evaluation
+    precisions, recalls = test(model, test_loader)
+    print("overall precision: ", np.mean(precisions))
+    print("overall recall: ", np.mean(recalls))

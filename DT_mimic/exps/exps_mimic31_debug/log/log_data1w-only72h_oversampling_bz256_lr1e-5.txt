@@ -1,0 +1,164 @@
+seed: 42
+model poseembed: False
+model pred: False
+total modalities: 6
+Total Samples 94458
+Positive Samples 7364
+Negative Samples 87094
+[12574949, 31423742]
+Building dataset for  train
+data loaded by multi-processing, used 26.825706005096436 s.
+Building dataset for  val
+data loaded by multi-processing, used 3.149960994720459 s.
+Building dataset for  test
+data loaded by multi-processing, used 6.228057384490967 s.
+Calculated mean and variance..
+======== Training ======
+lr: [1.0000000000000002e-06]
+======= EPOCH 0.0 ========
+Mode:  train
+BCE Loss: 0.63
+AU-ROC: 0.74
+AU-PRC: 0.74
+AU-PRC Baseline: 0.49
+Accuracy: 0.67
+Precision: 0.71
+Recall: 0.55
+Specificity: 0.78
+NPV: 0.64
+ECE: 0.10
+MCE: 0.23
+======= VALIDATION ========
+Mode:  train
+BCE Loss: 0.51
+AU-ROC: 0.85
+AU-PRC: 0.80
+AU-PRC Baseline: 0.46
+Accuracy: 0.76
+Precision: 0.78
+Recall: 0.66
+Specificity: 0.84
+NPV: 0.75
+ECE: 0.07
+MCE: 0.13
+======= TESTING ========
+Mode:  train
+BCE Loss: 0.54
+AU-ROC: 0.83
+AU-PRC: 0.81
+AU-PRC Baseline: 0.48
+Accuracy: 0.71
+Precision: 0.83
+Recall: 0.51
+Specificity: 0.90
+NPV: 0.67
+ECE: 0.10
+MCE: 0.20
+lr: [3.999999999999992e-06]
+======= EPOCH 1.0 ========
+Mode:  train
+BCE Loss: 0.32
+AU-ROC: 0.94
+AU-PRC: 0.93
+AU-PRC Baseline: 0.49
+Accuracy: 0.87
+Precision: 0.88
+Recall: 0.86
+Specificity: 0.88
+NPV: 0.87
+ECE: 0.04
+MCE: 0.10
+======= VALIDATION ========
+Mode:  train
+BCE Loss: 0.47
+AU-ROC: 0.89
+AU-PRC: 0.85
+AU-PRC Baseline: 0.46
+Accuracy: 0.81
+Precision: 0.81
+Recall: 0.79
+Specificity: 0.84
+NPV: 0.82
+ECE: 0.07
+MCE: 0.13
+======= TESTING ========
+Mode:  train
+BCE Loss: 0.49
+AU-ROC: 0.87
+AU-PRC: 0.85
+AU-PRC Baseline: 0.48
+Accuracy: 0.80
+Precision: 0.79
+Recall: 0.78
+Specificity: 0.81
+NPV: 0.80
+ECE: 0.06
+MCE: 0.08
+lr: [6.999999999999973e-06]
+======= EPOCH 2.0 ========
+Mode:  train
+BCE Loss: 0.17
+AU-ROC: 0.98
+AU-PRC: 0.98
+AU-PRC Baseline: 0.49
+Accuracy: 0.94
+Precision: 0.94
+Recall: 0.95
+Specificity: 0.94
+NPV: 0.95
+ECE: 0.02
+MCE: 0.10
+======= VALIDATION ========
+Mode:  train
+BCE Loss: 0.70
+AU-ROC: 0.86
+AU-PRC: 0.82
+AU-PRC Baseline: 0.46
+Accuracy: 0.78
+Precision: 0.75
+Recall: 0.78
+Specificity: 0.78
+NPV: 0.81
+ECE: 0.15
+MCE: 0.23
+======= TESTING ========
+Mode:  train
+BCE Loss: 0.73
+AU-ROC: 0.84
+AU-PRC: 0.81
+AU-PRC Baseline: 0.49
+Accuracy: 0.77
+Precision: 0.76
+Recall: 0.79
+Specificity: 0.76
+NPV: 0.79
+ECE: 0.13
+MCE: 0.17
+lr: [9.999999999999955e-06]
+======= EPOCH 3.0 ========
+Mode:  train
+BCE Loss: 0.07
+AU-ROC: 1.00
+AU-PRC: 0.99
+AU-PRC Baseline: 0.50
+Accuracy: 0.98
+Precision: 0.97
+Recall: 0.98
+Specificity: 0.97
+NPV: 0.98
+ECE: 0.01
+MCE: 0.07
+======= VALIDATION ========
+Mode:  train
+BCE Loss: 1.06
+AU-ROC: 0.84
+AU-PRC: 0.79
+AU-PRC Baseline: 0.46
+Accuracy: 0.78
+Precision: 0.75
+Recall: 0.78
+Specificity: 0.77
+NPV: 0.81
+ECE: 0.18
+MCE: 0.27
+======= TESTING ========
