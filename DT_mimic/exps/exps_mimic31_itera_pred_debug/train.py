@@ -17,6 +17,59 @@ from IPython import embed
 import torch
 import torch.nn as nn
 
+import torch
+
+def peel_last_step_as_target(x, attention_mask, last_nonpad_idx, pad_value=0.0):
+    """
+    Args:
+        x:               (B, T, D) padded tensor
+        attention_mask:  (B, T) bool, True = padding
+        last_nonpad_idx: (B,) int64, -1 for empty sequence
+        pad_value:       value to write when zeroing (usually 0.0)
+
+    Returns:
+        x_mod:    (B, T, D) with last non-pad timestep zeroed
+        mask_mod: (B, T) bool with that timestep marked as padding (True)
+        y:        (B, D) ground-truth values taken from that timestep
+    """
+    B, T, D = x.shape
+    device = x.device
+    valid = last_nonpad_idx >= 0
+
+    # Clamp for safe gather/scatter, then mask invalid later
+    idx = last_nonpad_idx.clamp(min=0)
+
+    # 1) Gather ground-truth at last non-padding timestep
+    batch_idx = torch.arange(B, device=device)
+    y = x[batch_idx, idx, :]                      # (B, D)
+    y = y.masked_fill(~valid.unsqueeze(-1), 0.0)  # zero out invalid rows
+
+    # 2) Zero-out that timestep in x
+    x_mod = x.clone()
+    if valid.any():
+        x_mod[batch_idx[valid], idx[valid], :] = pad_value
+
+    # 3) Mark that timestep as padding in the mask
+    mask_mod = attention_mask.clone()
+    if valid.any():
+        mask_mod[batch_idx[valid], idx[valid]] = True
+
+    return x_mod, mask_mod, y
+
+def peel_last_step_from_list(tensor_list, attention_mask, last_nonpad_idx, pad_value=0.0):
+    """
+    tensor_list: list of (B, T, D_k)
+    """
+    out_list = []
+    ys = []
+    mask_mod = attention_mask
+    for i, xi in enumerate(tensor_list):
+        xi_mod, mask_mod, y = peel_last_step_as_target(xi, mask_mod, last_nonpad_idx, pad_value)
+        out_list.append(xi_mod)
+        ys.append(y.unsqueeze(1))
+    return out_list, mask_mod, ys
+
+
 class SoftF1Loss(nn.Module):
     """
     F1‑style loss that stays differentiable by replacing the hard counts
@@ -128,22 +181,15 @@ def train(model, evaluation, optimizer, logit_loss, l2_loss, datacfg, train_load
             demo_train = demo_train.cuda()
             Y_train = Y_train.cuda()
             key_padding_mask = key_padding_mask.cuda()
+            last_nonpad_idx = last_nonpad_idx.cuda()
 
-            bs, padded_seqlen = meds.shape[0], meds.shape[1]
+            # bs, padded_seqlen = meds.shape[0], meds.shape[1]
+            input_list, key_padding_mask, gt_preds = peel_last_step_from_list([meds, chart, out, proc, date, ing], key_padding_mask, last_nonpad_idx)
 
             if cfg.model.pred:
                 output, logits, preds = model(
-                    meds[:, :-1], chart[:, :-1], out[:, :-1], proc[:, :-1], date[:, :-1], ing[:, :-1], stat_train, demo_train, key_padding_mask[:, :-1]
+                    input_list[0], input_list[1], input_list[2], input_list[3], input_list[4], input_list[5], stat_train, demo_train, key_padding_mask
                 )
-
-                gt_preds = [
-                meds[:, -1:],
-                chart[:, -1:],
-                out[:, -1:],
-                proc[:, -1:],
-                date[:, -1:],
-                ing[:, -1:],
-                ]
 
             else:
                 output, logits, preds = model(
@@ -227,7 +273,7 @@ def val(model, val_loader, evaluation):
 
     for batch in tqdm(val_loader):
 
-        meds, chart, out, proc, date, ing, stat, demo, Y, key_padding_mask, buckets = batch
+        meds, chart, out, proc, date, ing, stat, demo, Y, key_padding_mask, buckets, last_nonpad_idx = batch
         meds = meds.cuda()
         chart = chart.cuda()
         out = out.cuda()
@@ -238,19 +284,14 @@ def val(model, val_loader, evaluation):
         demo = demo.cuda()
         Y = Y.cuda()
         key_padding_mask = key_padding_mask.cuda()
+        last_nonpad_idx = last_nonpad_idx.cuda()
+
+        input_list, key_padding_mask, gt_preds = peel_last_step_from_list([meds, chart, out, proc, date, ing], key_padding_mask, last_nonpad_idx)
 
         if cfg.model.pred:
             output, logits, preds = model(
-                meds[:, :-1], chart[:, :-1], out[:, :-1], proc[:, :-1], date[:, :-1], ing[:, :-1], stat, demo, key_padding_mask[:, :-1]
+                input_list[0], input_list[1], input_list[2], input_list[3], input_list[4], input_list[5], stat, demo, key_padding_mask,
             )
-            gt_preds = [
-                meds[:, -1:],
-                chart[:, -1:],
-                out[:, -1:],
-                proc[:, -1:],
-                date[:, -1:],
-                ing[:, -1:],
-            ]
         else:
             output, logits, preds = model(
                 meds, chart, out, proc, date, ing, stat, demo, key_padding_mask
@@ -290,7 +331,7 @@ def test(model, test_loader, evaluation):
     model.eval()
 
     for step, batch in enumerate(tqdm(test_loader)):
-        meds, chart, out, proc, date, ing, stat, demo, Y, key_padding_mask, buckets = batch
+        meds, chart, out, proc, date, ing, stat, demo, Y, key_padding_mask, buckets, last_nonpad_idx = batch
         meds = meds.cuda()
         chart = chart.cuda()
         out = out.cuda()
@@ -301,19 +342,14 @@ def test(model, test_loader, evaluation):
         demo = demo.cuda()
         Y = Y.cuda()
         key_padding_mask = key_padding_mask.cuda()
+        last_nonpad_idx = last_nonpad_idx.cuda()
+
+        input_list, key_padding_mask, gt_preds = peel_last_step_from_list([meds, chart, out, proc, date, ing], key_padding_mask, last_nonpad_idx)
 
         if cfg.model.pred:
             output, logits, preds = model(
-                meds[:, :-1], chart[:, :-1], out[:, :-1], proc[:, :-1], date[:, :-1], ing[:, :-1], stat, demo, key_padding_mask[:, :-1]
+                input_list[0], input_list[1], input_list[2], input_list[3], input_list[4], input_list[5], stat, demo, key_padding_mask,
             )
-            gt_preds = [
-                meds[:, -1:],
-                chart[:, -1:],
-                out[:, -1:],
-                proc[:, -1:],
-                date[:, -1:],
-                ing[:, -1:],
-            ]
         else:
             output, logits, preds = model(
                 meds, chart, out, proc, date, ing, stat, demo, key_padding_mask

@@ -87,7 +87,7 @@ C.val_size = 0.1
 C.model = edict()
 
 C.model.pred = True
-C.model.pred_loss = 0.5
+C.model.pred_loss = 1.0 # 0.5
 C.model.posemb = True # False
 
 C.model.embedding_size = 64

@@ -37,7 +37,9 @@ def rescale_iou(x, c=6):
     return x / (1 + k * (1 - x)**c)
 
 def cal_precision(pred, gt):
-    precision = torch.abs(pred - gt) / (torch.abs(pred) + torch.abs(gt))
+    # print("pred", pred)
+    # print("gt:", gt)
+    precision = torch.abs(pred - gt) / (torch.abs(pred) + torch.abs(gt) + 1e-6)
     return 1 - precision.mean()
 
 @torch.no_grad()
@@ -71,13 +73,13 @@ def test(model, test_loader):
             output, logits, preds = model(
                 meds, chart, out, proc, date, ing, stat, demo, None
             )
-            if output.squeeze().item() > cfg.test_pos_threshold or meds.shape[1] >= gt_meds.shape[1]:
+            if output.squeeze().item() > cfg.test_pos_threshold: # or meds.shape[1] >= gt_meds.shape[1]:
                 print("pred prob:", output.squeeze().item())
                 stop_pred = True
 
             for i in range(len(preds)):
-                # input_list[i] = torch.cat([input_list[i], preds[i]], dim=1)
-                input_list[i] = torch.cat([input_list[i], batch[i][:, meds.shape[1]:meds.shape[1]+1].cuda()], dim=1)
+                input_list[i] = torch.cat([input_list[i], preds[i]], dim=1)
+                # input_list[i] = torch.cat([input_list[i], batch[i][:, meds.shape[1]:meds.shape[1]+1].cuda()], dim=1)
 
         #print(gt_meds.shape[1], input_list[0].shape[1])
         iou = min(gt_meds.shape[1] - input_min_length, input_list[0].shape[1] - input_min_length) / max(gt_meds.shape[1] - input_min_length, input_list[0].shape[1] - input_min_length)
@@ -87,15 +89,16 @@ def test(model, test_loader):
         recall = iou
         recalls.append(recall)
 
-        # precision_min_length = min(gt_meds.shape[1] - input_min_length, input_list[0].shape[1] - input_min_length)
-        # precision = 0
-        # for i in range(len(input_list)):
-        #     precision += cal_precision(input_list[i].detach().cpu()[:, input_min_length:input_min_length + precision_min_length], batch[i][:, input_min_length:input_min_length + precision_min_length])
-        # precision = precision.item() / len(input_list)
-        # #print("Precision: ", precision)
-        # precisions.append(precision)
+        precision_min_length = min(gt_meds.shape[1] - input_min_length, input_list[0].shape[1] - input_min_length)
+        precision = 0
+        for i in range(len(input_list)):
+            precision += cal_precision(input_list[i].detach().cpu()[:, input_min_length:input_min_length + precision_min_length], batch[i][:, input_min_length:input_min_length + precision_min_length])
+        precision = precision.item() / len(input_list)
+        print("Precision: ", precision, len(input_list))
+        precisions.append(precision)
 
         torch.cuda.empty_cache()
+        # break
 
     return precisions, recalls
 

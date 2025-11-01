@@ -1,0 +1,8 @@
+total modalities: 6
+Total Samples 94458
+Positive Samples 7364
+Negative Samples 87094
+Building dataset for  test
+Loaded model from snapshot_epoch19.pth (saved epoch 19)
+======= TESTING ========
+Zero out:  ing

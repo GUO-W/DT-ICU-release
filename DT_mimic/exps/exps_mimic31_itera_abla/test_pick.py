@@ -46,7 +46,7 @@ def cal_precision(pred, gt):
     return 1 - precision.mean()
 
 @torch.no_grad()
-def test(model, test_loader, evaluation, mode="meds"):
+def test(model, test_loader, test_ids_new, evaluation, mode="meds", scale=1000.0):
     print("======= TESTING ========")
     print("Zero out: ", mode)
     outputs = []
@@ -61,41 +61,43 @@ def test(model, test_loader, evaluation, mode="meds"):
         #     continue
 
         if mode == "meds":
-            meds = gt_meds[:, :-1].cuda() * 0.0
+            fake_meds = gt_meds[:, :-1].cuda() * scale
         else:
-            meds = gt_meds[:, :-1].cuda()
+            fake_meds = gt_meds[:, :-1].cuda()
+        meds = gt_meds[:, :-1].cuda()
         
         if mode == "chart":
-            chart = gt_chart[:, :-1].cuda() * 0.0
+            fake_chart = gt_chart[:, :-1].cuda() * scale
         else:
-            chart = gt_chart[:, :-1].cuda()
+            fake_chart = gt_chart[:, :-1].cuda()
+        chart = gt_chart[:, :-1].cuda()
 
         if mode == "out":
-            out = gt_out[:, :-1].cuda() * 0.0
+            fake_out = gt_out[:, :-1].cuda() * scale
         else:
-            out = gt_out[:, :-1].cuda()
+            fake_out = gt_out[:, :-1].cuda()
+        out = gt_out[:, :-1].cuda()
         
         if mode == "proc":
-            proc = gt_proc[:, :-1].cuda() * 0.0
+            fake_proc = gt_proc[:, :-1].cuda() * scale
         else:
-            proc = gt_proc[:, :-1].cuda()
+            fake_proc = gt_proc[:, :-1].cuda()
+        proc = gt_proc[:, :-1].cuda()
         
         if mode == "date":
-            date = gt_date[:, :-1].cuda() * 0.0
+            fake_date = gt_date[:, :-1].cuda() * scale
         else:
-            date = gt_date[:, :-1].cuda()
+            fake_date = gt_date[:, :-1].cuda()
+        date = gt_date[:, :-1].cuda()
         
         if mode == "ing":
-            ing = gt_ing[:, :-1].cuda() * 0.0
+            fake_ing = gt_ing[:, :-1].cuda() * scale
         else:
-            ing = gt_ing[:, :-1].cuda()
+            fake_ing = gt_ing[:, :-1].cuda()
+        ing = gt_ing[:, :-1].cuda()
         
-        if mode == "static":
-            stat = stat.cuda() * 0.0
-            demo = demo.cuda() * 0.0
-        else:
-            stat = stat.cuda()
-            demo = demo.cuda()
+        stat = stat.cuda()
+        demo = demo.cuda()
 
         gt_preds = [
             gt_meds[:, -1:],
@@ -106,11 +108,17 @@ def test(model, test_loader, evaluation, mode="meds"):
             gt_ing[:, -1:],
         ]
 
-        input_list = [meds, chart, out, proc, date, ing]
-        meds, chart, out, proc, date, ing = input_list
         output, logits, preds = model(
             meds, chart, out, proc, date, ing, stat, demo, None
         )
+
+        # fake_input_list = [fake_meds, fake_chart, fake_out, fake_proc, fake_date, fake_ing]
+        fake_output, fake_logits, fake_preds = model(
+            fake_meds, fake_chart, fake_out, fake_proc, fake_date, fake_ing, stat, demo, None
+        )
+
+        if abs(fake_output.item() - output.item()) > 0.5:
+            print("comparison:", test_ids_new[step], round(output.item(), 4), round(fake_output.item(), 4))
 
         for i in range(len(preds)):
             if pred_all is None:
@@ -207,10 +215,11 @@ if __name__ == "__main__":
     model.eval()
 
     # evaluation
-    test(model, test_loader, evaluation=evaluation, mode="meds")
-    test(model, test_loader, evaluation=evaluation, mode="chart")
-    test(model, test_loader, evaluation=evaluation, mode="out")
-    test(model, test_loader, evaluation=evaluation, mode="proc")
-    test(model, test_loader, evaluation=evaluation, mode="date")
-    test(model, test_loader, evaluation=evaluation, mode="ing")
-    test(model, test_loader, evaluation=evaluation, mode="static")
+    # test(model, test_loader, evaluation=evaluation, mode="meds", scale=0.0)
+    # test(model, test_loader, evaluation=evaluation, mode="chart", scale=0.0)
+    # test(model, test_loader, evaluation=evaluation, mode="out", scale=0.0)
+    # test(model, test_loader, evaluation=evaluation, mode="proc", scale=0.0)
+    # test(model, test_loader, evaluation=evaluation, mode="date", scale=0.0)
+    test(model, test_loader, test_ids_new, evaluation=evaluation, mode="ing", scale=0.0)
+    #test(model, test_loader, test_ids_new, evaluation=evaluation, mode="proc", scale=0.0)
+    # test(model, test_loader, evaluation=evaluation, mode="static")
