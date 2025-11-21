@@ -81,11 +81,21 @@ cp from /exps_mimic31_itera, save the trained pth snapshot_epoch19.pth, no train
 1- test_seqlen.py --model_path snapshot_epoch19.pth >log_test_seqlen.txt : test the res when input diff seq 4-96.
 2- test_lomo.py --model_path snapshot_epoch19.pth >log_test_lomo.txt : LOMO analyse for diff inputs
 
-## exps_mimic31_itera_pred_debug
-debug pred padding
+## [imp] exps_mimic31_itera_pred_debug
+train.py: debug pred padding. (prediction better, but no much differences indeed.)
++ run.sh: 4 options for diff models: python -u train.py --type posemb > log/log_poseemb_log.txt
+the trained model with model "posemb" is the best model for our work.(epoch19)
+# lomo:
++ test_only.py : test only + lomo
++ run_test_lomo.sh : lomo > "log/test_lomo_all.txt"
++ run_test_ltmo.sh : leave-two-modalities-out (LTMO) for interaction > "log/test_ltmo_all.txt"
+
+## exps_iii_debug
+same with above, debug and re-train. 
 
 
 
+---------------
 ## exps_iii
 from exps_mimic31_itera
 # steps:

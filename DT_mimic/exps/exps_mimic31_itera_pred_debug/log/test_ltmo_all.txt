@@ -1,0 +1,1227 @@
+========== Running LTMO (leave-two-modalities-out) ==========
+
+========== Running zero_inputs: meds,chart ==========
+model type: posemb
+model pred: True
+Total Samples 94458
+Positive Samples 7364
+Negative Samples 87094
+Building dataset for  train
+Building dataset for  val
+Building dataset for  test
+total: short neg 30242
+total: short pos 2174
+total: long neg 29859
+total: long pos 2894
+Loading checkpoint from: snapshot_epoch19.pth
+Loaded model_state_dict from epoch 19
+======= TESTING ========
+Zero out: chart,meds
+test_only.py:284: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  ckpt = torch.load(ckpt_path, map_location="cuda" if cfg.device != "cpu" else "cpu")
+Mode:  train
+BCE Loss: 0.11
+PRED Loss: 0.01
+Total Loss: 0.12
+AU-ROC: 0.98
+AU-PRC: 0.80
+AU-PRC Baseline: 0.07
+Accuracy: 0.96
+Precision: 0.65
+Recall: 0.83
+Specificity: 0.97
+NPV: 0.99
+ECE: 0.03
+MCE: 0.35
+
+========== Running zero_inputs: meds,out ==========
+model type: posemb
+model pred: True
+Total Samples 94458
+Positive Samples 7364
+Negative Samples 87094
+Building dataset for  train
+Building dataset for  val
+Building dataset for  test
+total: short neg 30242
+total: short pos 2174
+total: long neg 29859
+total: long pos 2894
+Loading checkpoint from: snapshot_epoch19.pth
+Loaded model_state_dict from epoch 19
+======= TESTING ========
+Zero out: meds,out
+test_only.py:284: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  ckpt = torch.load(ckpt_path, map_location="cuda" if cfg.device != "cpu" else "cpu")
+Mode:  train
+BCE Loss: 0.20
+PRED Loss: 0.01
+Total Loss: 0.21
+AU-ROC: 0.97
+AU-PRC: 0.76
+AU-PRC Baseline: 0.07
+Accuracy: 0.92
+Precision: 0.47
+Recall: 0.91
+Specificity: 0.93
+NPV: 0.99
+ECE: 0.09
+MCE: 0.51
+
+========== Running zero_inputs: meds,proc ==========
+model type: posemb
+model pred: True
+Total Samples 94458
+Positive Samples 7364
+Negative Samples 87094
+Building dataset for  train
+Building dataset for  val
+Building dataset for  test
+total: short neg 30242
+total: short pos 2174
+total: long neg 29859
+total: long pos 2894
+Loading checkpoint from: snapshot_epoch19.pth
+Loaded model_state_dict from epoch 19
+======= TESTING ========
+Zero out: meds,proc
+test_only.py:284: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  ckpt = torch.load(ckpt_path, map_location="cuda" if cfg.device != "cpu" else "cpu")
+Mode:  train
+BCE Loss: 0.18
+PRED Loss: 0.01
+Total Loss: 0.19
+AU-ROC: 0.91
+AU-PRC: 0.49
+AU-PRC Baseline: 0.07
+Accuracy: 0.94
+Precision: 0.64
+Recall: 0.32
+Specificity: 0.99
+NPV: 0.95
+ECE: 0.03
+MCE: 0.19
+
+========== Running zero_inputs: meds,date ==========
+model type: posemb
+model pred: True
+Total Samples 94458
+Positive Samples 7364
+Negative Samples 87094
+Building dataset for  train
+Building dataset for  val
+Building dataset for  test
+total: short neg 30242
+total: short pos 2174
+total: long neg 29859
+total: long pos 2894
+Loading checkpoint from: snapshot_epoch19.pth
+Loaded model_state_dict from epoch 19
+======= TESTING ========
+Zero out: date,meds
+test_only.py:284: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  ckpt = torch.load(ckpt_path, map_location="cuda" if cfg.device != "cpu" else "cpu")
+Mode:  train
+BCE Loss: 0.11
+PRED Loss: 0.01
+Total Loss: 0.12
+AU-ROC: 0.98
+AU-PRC: 0.80
+AU-PRC Baseline: 0.07
+Accuracy: 0.96
+Precision: 0.65
+Recall: 0.84
+Specificity: 0.97
+NPV: 0.99
+ECE: 0.03
+MCE: 0.35
+
+========== Running zero_inputs: meds,ing ==========
+model type: posemb
+model pred: True
+Total Samples 94458
+Positive Samples 7364
+Negative Samples 87094
+Building dataset for  train
+Building dataset for  val
+Building dataset for  test
+total: short neg 30242
+total: short pos 2174
+total: long neg 29859
+total: long pos 2894
+Loading checkpoint from: snapshot_epoch19.pth
+Loaded model_state_dict from epoch 19
+======= TESTING ========
+Zero out: ing,meds
+test_only.py:284: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  ckpt = torch.load(ckpt_path, map_location="cuda" if cfg.device != "cpu" else "cpu")
+Mode:  train
+BCE Loss: 0.13
+PRED Loss: 0.01
+Total Loss: 0.15
+AU-ROC: 0.97
+AU-PRC: 0.79
+AU-PRC Baseline: 0.07
+Accuracy: 0.95
+Precision: 0.60
+Recall: 0.82
+Specificity: 0.96
+NPV: 0.99
+ECE: 0.05
+MCE: 0.36
+
+========== Running zero_inputs: meds,static ==========
+model type: posemb
+model pred: True
+Total Samples 94458
+Positive Samples 7364
+Negative Samples 87094
+Building dataset for  train
+Building dataset for  val
+Building dataset for  test
+total: short neg 30242
+total: short pos 2174
+total: long neg 29859
+total: long pos 2894
+Loading checkpoint from: snapshot_epoch19.pth
+Loaded model_state_dict from epoch 19
+======= TESTING ========
+Zero out: meds,static
+test_only.py:284: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  ckpt = torch.load(ckpt_path, map_location="cuda" if cfg.device != "cpu" else "cpu")
+Mode:  train
+BCE Loss: 0.12
+PRED Loss: 0.04
+Total Loss: 0.16
+AU-ROC: 0.97
+AU-PRC: 0.77
+AU-PRC Baseline: 0.07
+Accuracy: 0.95
+Precision: 0.63
+Recall: 0.77
+Specificity: 0.97
+NPV: 0.98
+ECE: 0.03
+MCE: 0.42
+
+========== Running zero_inputs: meds,stat ==========
+model type: posemb
+model pred: True
+Total Samples 94458
+Positive Samples 7364
+Negative Samples 87094
+Building dataset for  train
+Building dataset for  val
+Building dataset for  test
+total: short neg 30242
+total: short pos 2174
+total: long neg 29859
+total: long pos 2894
+Loading checkpoint from: snapshot_epoch19.pth
+Loaded model_state_dict from epoch 19
+======= TESTING ========
+Zero out: meds,stat
+test_only.py:284: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  ckpt = torch.load(ckpt_path, map_location="cuda" if cfg.device != "cpu" else "cpu")
+Mode:  train
+BCE Loss: 0.11
+PRED Loss: 0.01
+Total Loss: 0.12
+AU-ROC: 0.98
+AU-PRC: 0.80
+AU-PRC Baseline: 0.07
+Accuracy: 0.96
+Precision: 0.65
+Recall: 0.83
+Specificity: 0.97
+NPV: 0.99
+ECE: 0.03
+MCE: 0.36
+
+========== Running zero_inputs: meds,demo ==========
+model type: posemb
+model pred: True
+Total Samples 94458
+Positive Samples 7364
+Negative Samples 87094
+Building dataset for  train
+Building dataset for  val
+Building dataset for  test
+total: short neg 30242
+total: short pos 2174
+total: long neg 29859
+total: long pos 2894
+Loading checkpoint from: snapshot_epoch19.pth
+Loaded model_state_dict from epoch 19
+======= TESTING ========
+Zero out: demo,meds
+test_only.py:284: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  ckpt = torch.load(ckpt_path, map_location="cuda" if cfg.device != "cpu" else "cpu")
+Mode:  train
+BCE Loss: 0.12
+PRED Loss: 0.04
+Total Loss: 0.16
+AU-ROC: 0.97
+AU-PRC: 0.77
+AU-PRC Baseline: 0.07
+Accuracy: 0.95
+Precision: 0.63
+Recall: 0.78
+Specificity: 0.97
+NPV: 0.98
+ECE: 0.03
+MCE: 0.41
+
+========== Running zero_inputs: chart,out ==========
+model type: posemb
+model pred: True
+Total Samples 94458
+Positive Samples 7364
+Negative Samples 87094
+Building dataset for  train
+Building dataset for  val
+Building dataset for  test
+total: short neg 30242
+total: short pos 2174
+total: long neg 29859
+total: long pos 2894
+Loading checkpoint from: snapshot_epoch19.pth
+Loaded model_state_dict from epoch 19
+======= TESTING ========
+Zero out: chart,out
+test_only.py:284: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  ckpt = torch.load(ckpt_path, map_location="cuda" if cfg.device != "cpu" else "cpu")
+Mode:  train
+BCE Loss: 0.22
+PRED Loss: 0.01
+Total Loss: 0.23
+AU-ROC: 0.98
+AU-PRC: 0.79
+AU-PRC Baseline: 0.07
+Accuracy: 0.92
+Precision: 0.44
+Recall: 0.93
+Specificity: 0.92
+NPV: 0.99
+ECE: 0.10
+MCE: 0.60
+
+========== Running zero_inputs: chart,proc ==========
+model type: posemb
+model pred: True
+Total Samples 94458
+Positive Samples 7364
+Negative Samples 87094
+Building dataset for  train
+Building dataset for  val
+Building dataset for  test
+total: short neg 30242
+total: short pos 2174
+total: long neg 29859
+total: long pos 2894
+Loading checkpoint from: snapshot_epoch19.pth
+Loaded model_state_dict from epoch 19
+======= TESTING ========
+Zero out: chart,proc
+test_only.py:284: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  ckpt = torch.load(ckpt_path, map_location="cuda" if cfg.device != "cpu" else "cpu")
+Mode:  train
+BCE Loss: 0.14
+PRED Loss: 0.01
+Total Loss: 0.16
+AU-ROC: 0.94
+AU-PRC: 0.64
+AU-PRC Baseline: 0.07
+Accuracy: 0.95
+Precision: 0.62
+Recall: 0.58
+Specificity: 0.97
+NPV: 0.97
+ECE: 0.02
+MCE: 0.36
+
+========== Running zero_inputs: chart,date ==========
+model type: posemb
+model pred: True
+Total Samples 94458
+Positive Samples 7364
+Negative Samples 87094
+Building dataset for  train
+Building dataset for  val
+Building dataset for  test
+total: short neg 30242
+total: short pos 2174
+total: long neg 29859
+total: long pos 2894
+Loading checkpoint from: snapshot_epoch19.pth
+Loaded model_state_dict from epoch 19
+======= TESTING ========
+Zero out: chart,date
+test_only.py:284: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  ckpt = torch.load(ckpt_path, map_location="cuda" if cfg.device != "cpu" else "cpu")
+Mode:  train
+BCE Loss: 0.12
+PRED Loss: 0.01
+Total Loss: 0.13
+AU-ROC: 0.98
+AU-PRC: 0.83
+AU-PRC Baseline: 0.07
+Accuracy: 0.96
+Precision: 0.62
+Recall: 0.89
+Specificity: 0.96
+NPV: 0.99
+ECE: 0.04
+MCE: 0.40
+
+========== Running zero_inputs: chart,ing ==========
+model type: posemb
+model pred: True
+Total Samples 94458
+Positive Samples 7364
+Negative Samples 87094
+Building dataset for  train
+Building dataset for  val
+Building dataset for  test
+total: short neg 30242
+total: short pos 2174
+total: long neg 29859
+total: long pos 2894
+Loading checkpoint from: snapshot_epoch19.pth
+Loaded model_state_dict from epoch 19
+======= TESTING ========
+Zero out: chart,ing
+test_only.py:284: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  ckpt = torch.load(ckpt_path, map_location="cuda" if cfg.device != "cpu" else "cpu")
+Mode:  train
+BCE Loss: 0.17
+PRED Loss: 0.02
+Total Loss: 0.18
+AU-ROC: 0.98
+AU-PRC: 0.79
+AU-PRC Baseline: 0.07
+Accuracy: 0.94
+Precision: 0.52
+Recall: 0.90
+Specificity: 0.94
+NPV: 0.99
+ECE: 0.08
+MCE: 0.53
+
+========== Running zero_inputs: chart,static ==========
+model type: posemb
+model pred: True
+Total Samples 94458
+Positive Samples 7364
+Negative Samples 87094
+Building dataset for  train
+Building dataset for  val
+Building dataset for  test
+total: short neg 30242
+total: short pos 2174
+total: long neg 29859
+total: long pos 2894
+Loading checkpoint from: snapshot_epoch19.pth
+Loaded model_state_dict from epoch 19
+======= TESTING ========
+Zero out: chart,static
+test_only.py:284: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  ckpt = torch.load(ckpt_path, map_location="cuda" if cfg.device != "cpu" else "cpu")
+Mode:  train
+BCE Loss: 0.13
+PRED Loss: 0.04
+Total Loss: 0.17
+AU-ROC: 0.97
+AU-PRC: 0.80
+AU-PRC Baseline: 0.07
+Accuracy: 0.95
+Precision: 0.60
+Recall: 0.84
+Specificity: 0.96
+NPV: 0.99
+ECE: 0.04
+MCE: 0.46
+
+========== Running zero_inputs: chart,stat ==========
+model type: posemb
+model pred: True
+Total Samples 94458
+Positive Samples 7364
+Negative Samples 87094
+Building dataset for  train
+Building dataset for  val
+Building dataset for  test
+total: short neg 30242
+total: short pos 2174
+total: long neg 29859
+total: long pos 2894
+Loading checkpoint from: snapshot_epoch19.pth
+Loaded model_state_dict from epoch 19
+======= TESTING ========
+Zero out: chart,stat
+test_only.py:284: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  ckpt = torch.load(ckpt_path, map_location="cuda" if cfg.device != "cpu" else "cpu")
+Mode:  train
+BCE Loss: 0.12
+PRED Loss: 0.01
+Total Loss: 0.13
+AU-ROC: 0.98
+AU-PRC: 0.83
+AU-PRC Baseline: 0.07
+Accuracy: 0.96
+Precision: 0.62
+Recall: 0.89
+Specificity: 0.96
+NPV: 0.99
+ECE: 0.04
+MCE: 0.40
+
+========== Running zero_inputs: chart,demo ==========
+model type: posemb
+model pred: True
+Total Samples 94458
+Positive Samples 7364
+Negative Samples 87094
+Building dataset for  train
+Building dataset for  val
+Building dataset for  test
+total: short neg 30242
+total: short pos 2174
+total: long neg 29859
+total: long pos 2894
+Loading checkpoint from: snapshot_epoch19.pth
+Loaded model_state_dict from epoch 19
+======= TESTING ========
+Zero out: chart,demo
+test_only.py:284: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  ckpt = torch.load(ckpt_path, map_location="cuda" if cfg.device != "cpu" else "cpu")
+Mode:  train
+BCE Loss: 0.13
+PRED Loss: 0.04
+Total Loss: 0.17
+AU-ROC: 0.97
+AU-PRC: 0.80
+AU-PRC Baseline: 0.07
+Accuracy: 0.95
+Precision: 0.60
+Recall: 0.85
+Specificity: 0.96
+NPV: 0.99
+ECE: 0.04
+MCE: 0.46
+
+========== Running zero_inputs: out,proc ==========
+model type: posemb
+model pred: True
+Total Samples 94458
+Positive Samples 7364
+Negative Samples 87094
+Building dataset for  train
+Building dataset for  val
+Building dataset for  test
+total: short neg 30242
+total: short pos 2174
+total: long neg 29859
+total: long pos 2894
+Loading checkpoint from: snapshot_epoch19.pth
+Loaded model_state_dict from epoch 19
+======= TESTING ========
+Zero out: out,proc
+test_only.py:284: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  ckpt = torch.load(ckpt_path, map_location="cuda" if cfg.device != "cpu" else "cpu")
+Mode:  train
+BCE Loss: 0.23
+PRED Loss: 0.02
+Total Loss: 0.25
+AU-ROC: 0.93
+AU-PRC: 0.54
+AU-PRC Baseline: 0.07
+Accuracy: 0.91
+Precision: 0.40
+Recall: 0.70
+Specificity: 0.92
+NPV: 0.98
+ECE: 0.08
+MCE: 0.51
+
+========== Running zero_inputs: out,date ==========
+model type: posemb
+model pred: True
+Total Samples 94458
+Positive Samples 7364
+Negative Samples 87094
+Building dataset for  train
+Building dataset for  val
+Building dataset for  test
+total: short neg 30242
+total: short pos 2174
+total: long neg 29859
+total: long pos 2894
+Loading checkpoint from: snapshot_epoch19.pth
+Loaded model_state_dict from epoch 19
+======= TESTING ========
+Zero out: date,out
+test_only.py:284: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  ckpt = torch.load(ckpt_path, map_location="cuda" if cfg.device != "cpu" else "cpu")
+Mode:  train
+BCE Loss: 0.22
+PRED Loss: 0.01
+Total Loss: 0.23
+AU-ROC: 0.98
+AU-PRC: 0.80
+AU-PRC Baseline: 0.07
+Accuracy: 0.92
+Precision: 0.44
+Recall: 0.93
+Specificity: 0.92
+NPV: 0.99
+ECE: 0.10
+MCE: 0.61
+
+========== Running zero_inputs: out,ing ==========
+model type: posemb
+model pred: True
+Total Samples 94458
+Positive Samples 7364
+Negative Samples 87094
+Building dataset for  train
+Building dataset for  val
+Building dataset for  test
+total: short neg 30242
+total: short pos 2174
+total: long neg 29859
+total: long pos 2894
+Loading checkpoint from: snapshot_epoch19.pth
+Loaded model_state_dict from epoch 19
+======= TESTING ========
+Zero out: ing,out
+test_only.py:284: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  ckpt = torch.load(ckpt_path, map_location="cuda" if cfg.device != "cpu" else "cpu")
+Mode:  train
+BCE Loss: 0.32
+PRED Loss: 0.02
+Total Loss: 0.34
+AU-ROC: 0.97
+AU-PRC: 0.77
+AU-PRC Baseline: 0.07
+Accuracy: 0.87
+Precision: 0.34
+Recall: 0.95
+Specificity: 0.87
+NPV: 1.00
+ECE: 0.17
+MCE: 0.65
+
+========== Running zero_inputs: out,static ==========
+model type: posemb
+model pred: True
+Total Samples 94458
+Positive Samples 7364
+Negative Samples 87094
+Building dataset for  train
+Building dataset for  val
+Building dataset for  test
+total: short neg 30242
+total: short pos 2174
+total: long neg 29859
+total: long pos 2894
+Loading checkpoint from: snapshot_epoch19.pth
+Loaded model_state_dict from epoch 19
+======= TESTING ========
+Zero out: out,static
+test_only.py:284: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  ckpt = torch.load(ckpt_path, map_location="cuda" if cfg.device != "cpu" else "cpu")
+Mode:  train
+BCE Loss: 0.30
+PRED Loss: 0.04
+Total Loss: 0.34
+AU-ROC: 0.97
+AU-PRC: 0.76
+AU-PRC Baseline: 0.07
+Accuracy: 0.89
+Precision: 0.36
+Recall: 0.93
+Specificity: 0.88
+NPV: 0.99
+ECE: 0.13
+MCE: 0.69
+
+========== Running zero_inputs: out,stat ==========
+model type: posemb
+model pred: True
+Total Samples 94458
+Positive Samples 7364
+Negative Samples 87094
+Building dataset for  train
+Building dataset for  val
+Building dataset for  test
+total: short neg 30242
+total: short pos 2174
+total: long neg 29859
+total: long pos 2894
+Loading checkpoint from: snapshot_epoch19.pth
+Loaded model_state_dict from epoch 19
+======= TESTING ========
+Zero out: out,stat
+test_only.py:284: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  ckpt = torch.load(ckpt_path, map_location="cuda" if cfg.device != "cpu" else "cpu")
+Mode:  train
+BCE Loss: 0.22
+PRED Loss: 0.01
+Total Loss: 0.23
+AU-ROC: 0.98
+AU-PRC: 0.79
+AU-PRC Baseline: 0.07
+Accuracy: 0.92
+Precision: 0.44
+Recall: 0.93
+Specificity: 0.92
+NPV: 0.99
+ECE: 0.10
+MCE: 0.61
+
+========== Running zero_inputs: out,demo ==========
+model type: posemb
+model pred: True
+Total Samples 94458
+Positive Samples 7364
+Negative Samples 87094
+Building dataset for  train
+Building dataset for  val
+Building dataset for  test
+total: short neg 30242
+total: short pos 2174
+total: long neg 29859
+total: long pos 2894
+Loading checkpoint from: snapshot_epoch19.pth
+Loaded model_state_dict from epoch 19
+======= TESTING ========
+Zero out: demo,out
+test_only.py:284: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  ckpt = torch.load(ckpt_path, map_location="cuda" if cfg.device != "cpu" else "cpu")
+Mode:  train
+BCE Loss: 0.30
+PRED Loss: 0.04
+Total Loss: 0.34
+AU-ROC: 0.97
+AU-PRC: 0.76
+AU-PRC Baseline: 0.07
+Accuracy: 0.89
+Precision: 0.36
+Recall: 0.93
+Specificity: 0.88
+NPV: 0.99
+ECE: 0.13
+MCE: 0.69
+
+========== Running zero_inputs: proc,date ==========
+model type: posemb
+model pred: True
+Total Samples 94458
+Positive Samples 7364
+Negative Samples 87094
+Building dataset for  train
+Building dataset for  val
+Building dataset for  test
+total: short neg 30242
+total: short pos 2174
+total: long neg 29859
+total: long pos 2894
+Loading checkpoint from: snapshot_epoch19.pth
+Loaded model_state_dict from epoch 19
+======= TESTING ========
+Zero out: date,proc
+test_only.py:284: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  ckpt = torch.load(ckpt_path, map_location="cuda" if cfg.device != "cpu" else "cpu")
+Mode:  train
+BCE Loss: 0.14
+PRED Loss: 0.01
+Total Loss: 0.16
+AU-ROC: 0.95
+AU-PRC: 0.64
+AU-PRC Baseline: 0.07
+Accuracy: 0.95
+Precision: 0.62
+Recall: 0.61
+Specificity: 0.97
+NPV: 0.97
+ECE: 0.02
+MCE: 0.33
+
+========== Running zero_inputs: proc,ing ==========
+model type: posemb
+model pred: True
+Total Samples 94458
+Positive Samples 7364
+Negative Samples 87094
+Building dataset for  train
+Building dataset for  val
+Building dataset for  test
+total: short neg 30242
+total: short pos 2174
+total: long neg 29859
+total: long pos 2894
+Loading checkpoint from: snapshot_epoch19.pth
+Loaded model_state_dict from epoch 19
+======= TESTING ========
+Zero out: ing,proc
+test_only.py:284: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  ckpt = torch.load(ckpt_path, map_location="cuda" if cfg.device != "cpu" else "cpu")
+Mode:  train
+BCE Loss: 0.21
+PRED Loss: 0.03
+Total Loss: 0.24
+AU-ROC: 0.93
+AU-PRC: 0.58
+AU-PRC Baseline: 0.07
+Accuracy: 0.92
+Precision: 0.45
+Recall: 0.67
+Specificity: 0.94
+NPV: 0.98
+ECE: 0.06
+MCE: 0.53
+
+========== Running zero_inputs: proc,static ==========
+model type: posemb
+model pred: True
+Total Samples 94458
+Positive Samples 7364
+Negative Samples 87094
+Building dataset for  train
+Building dataset for  val
+Building dataset for  test
+total: short neg 30242
+total: short pos 2174
+total: long neg 29859
+total: long pos 2894
+Loading checkpoint from: snapshot_epoch19.pth
+Loaded model_state_dict from epoch 19
+======= TESTING ========
+Zero out: proc,static
+test_only.py:284: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  ckpt = torch.load(ckpt_path, map_location="cuda" if cfg.device != "cpu" else "cpu")
+Mode:  train
+BCE Loss: 0.16
+PRED Loss: 0.05
+Total Loss: 0.21
+AU-ROC: 0.93
+AU-PRC: 0.60
+AU-PRC Baseline: 0.07
+Accuracy: 0.95
+Precision: 0.64
+Recall: 0.51
+Specificity: 0.98
+NPV: 0.97
+ECE: 0.02
+MCE: 0.25
+
+========== Running zero_inputs: proc,stat ==========
+model type: posemb
+model pred: True
+Total Samples 94458
+Positive Samples 7364
+Negative Samples 87094
+Building dataset for  train
+Building dataset for  val
+Building dataset for  test
+total: short neg 30242
+total: short pos 2174
+total: long neg 29859
+total: long pos 2894
+Loading checkpoint from: snapshot_epoch19.pth
+Loaded model_state_dict from epoch 19
+======= TESTING ========
+Zero out: proc,stat
+test_only.py:284: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  ckpt = torch.load(ckpt_path, map_location="cuda" if cfg.device != "cpu" else "cpu")
+Mode:  train
+BCE Loss: 0.14
+PRED Loss: 0.01
+Total Loss: 0.16
+AU-ROC: 0.95
+AU-PRC: 0.64
+AU-PRC Baseline: 0.07
+Accuracy: 0.95
+Precision: 0.62
+Recall: 0.60
+Specificity: 0.97
+NPV: 0.97
+ECE: 0.02
+MCE: 0.34
+
+========== Running zero_inputs: proc,demo ==========
+model type: posemb
+model pred: True
+Total Samples 94458
+Positive Samples 7364
+Negative Samples 87094
+Building dataset for  train
+Building dataset for  val
+Building dataset for  test
+total: short neg 30242
+total: short pos 2174
+total: long neg 29859
+total: long pos 2894
+Loading checkpoint from: snapshot_epoch19.pth
+Loaded model_state_dict from epoch 19
+======= TESTING ========
+Zero out: demo,proc
+test_only.py:284: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  ckpt = torch.load(ckpt_path, map_location="cuda" if cfg.device != "cpu" else "cpu")
+Mode:  train
+BCE Loss: 0.15
+PRED Loss: 0.05
+Total Loss: 0.21
+AU-ROC: 0.93
+AU-PRC: 0.60
+AU-PRC Baseline: 0.07
+Accuracy: 0.95
+Precision: 0.64
+Recall: 0.52
+Specificity: 0.98
+NPV: 0.97
+ECE: 0.02
+MCE: 0.26
+
+========== Running zero_inputs: date,ing ==========
+model type: posemb
+model pred: True
+Total Samples 94458
+Positive Samples 7364
+Negative Samples 87094
+Building dataset for  train
+Building dataset for  val
+Building dataset for  test
+total: short neg 30242
+total: short pos 2174
+total: long neg 29859
+total: long pos 2894
+Loading checkpoint from: snapshot_epoch19.pth
+Loaded model_state_dict from epoch 19
+======= TESTING ========
+Zero out: date,ing
+test_only.py:284: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  ckpt = torch.load(ckpt_path, map_location="cuda" if cfg.device != "cpu" else "cpu")
+Mode:  train
+BCE Loss: 0.17
+PRED Loss: 0.02
+Total Loss: 0.19
+AU-ROC: 0.98
+AU-PRC: 0.80
+AU-PRC Baseline: 0.07
+Accuracy: 0.94
+Precision: 0.51
+Recall: 0.90
+Specificity: 0.94
+NPV: 0.99
+ECE: 0.08
+MCE: 0.53
+
+========== Running zero_inputs: date,static ==========
+model type: posemb
+model pred: True
+Total Samples 94458
+Positive Samples 7364
+Negative Samples 87094
+Building dataset for  train
+Building dataset for  val
+Building dataset for  test
+total: short neg 30242
+total: short pos 2174
+total: long neg 29859
+total: long pos 2894
+Loading checkpoint from: snapshot_epoch19.pth
+Loaded model_state_dict from epoch 19
+======= TESTING ========
+Zero out: date,static
+test_only.py:284: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  ckpt = torch.load(ckpt_path, map_location="cuda" if cfg.device != "cpu" else "cpu")
+Mode:  train
+BCE Loss: 0.13
+PRED Loss: 0.04
+Total Loss: 0.17
+AU-ROC: 0.97
+AU-PRC: 0.80
+AU-PRC Baseline: 0.07
+Accuracy: 0.95
+Precision: 0.60
+Recall: 0.84
+Specificity: 0.96
+NPV: 0.99
+ECE: 0.04
+MCE: 0.47
+
+========== Running zero_inputs: date,stat ==========
+model type: posemb
+model pred: True
+Total Samples 94458
+Positive Samples 7364
+Negative Samples 87094
+Building dataset for  train
+Building dataset for  val
+Building dataset for  test
+total: short neg 30242
+total: short pos 2174
+total: long neg 29859
+total: long pos 2894
+Loading checkpoint from: snapshot_epoch19.pth
+Loaded model_state_dict from epoch 19
+======= TESTING ========
+Zero out: date,stat
+test_only.py:284: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  ckpt = torch.load(ckpt_path, map_location="cuda" if cfg.device != "cpu" else "cpu")
+Mode:  train
+BCE Loss: 0.12
+PRED Loss: 0.01
+Total Loss: 0.13
+AU-ROC: 0.98
+AU-PRC: 0.83
+AU-PRC Baseline: 0.07
+Accuracy: 0.96
+Precision: 0.62
+Recall: 0.90
+Specificity: 0.96
+NPV: 0.99
+ECE: 0.04
+MCE: 0.39
+
+========== Running zero_inputs: date,demo ==========
+model type: posemb
+model pred: True
+Total Samples 94458
+Positive Samples 7364
+Negative Samples 87094
+Building dataset for  train
+Building dataset for  val
+Building dataset for  test
+total: short neg 30242
+total: short pos 2174
+total: long neg 29859
+total: long pos 2894
+Loading checkpoint from: snapshot_epoch19.pth
+Loaded model_state_dict from epoch 19
+======= TESTING ========
+Zero out: date,demo
+test_only.py:284: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  ckpt = torch.load(ckpt_path, map_location="cuda" if cfg.device != "cpu" else "cpu")
+Mode:  train
+BCE Loss: 0.13
+PRED Loss: 0.04
+Total Loss: 0.18
+AU-ROC: 0.97
+AU-PRC: 0.80
+AU-PRC Baseline: 0.07
+Accuracy: 0.95
+Precision: 0.60
+Recall: 0.86
+Specificity: 0.96
+NPV: 0.99
+ECE: 0.04
+MCE: 0.46
+
+========== Running zero_inputs: ing,static ==========
+model type: posemb
+model pred: True
+Total Samples 94458
+Positive Samples 7364
+Negative Samples 87094
+Building dataset for  train
+Building dataset for  val
+Building dataset for  test
+total: short neg 30242
+total: short pos 2174
+total: long neg 29859
+total: long pos 2894
+Loading checkpoint from: snapshot_epoch19.pth
+Loaded model_state_dict from epoch 19
+======= TESTING ========
+Zero out: ing,static
+test_only.py:284: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  ckpt = torch.load(ckpt_path, map_location="cuda" if cfg.device != "cpu" else "cpu")
+Mode:  train
+BCE Loss: 0.21
+PRED Loss: 0.06
+Total Loss: 0.27
+AU-ROC: 0.97
+AU-PRC: 0.77
+AU-PRC Baseline: 0.07
+Accuracy: 0.92
+Precision: 0.44
+Recall: 0.88
+Specificity: 0.92
+NPV: 0.99
+ECE: 0.09
+MCE: 0.61
+
+========== Running zero_inputs: ing,stat ==========
+model type: posemb
+model pred: True
+Total Samples 94458
+Positive Samples 7364
+Negative Samples 87094
+Building dataset for  train
+Building dataset for  val
+Building dataset for  test
+total: short neg 30242
+total: short pos 2174
+total: long neg 29859
+total: long pos 2894
+Loading checkpoint from: snapshot_epoch19.pth
+Loaded model_state_dict from epoch 19
+======= TESTING ========
+Zero out: ing,stat
+test_only.py:284: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  ckpt = torch.load(ckpt_path, map_location="cuda" if cfg.device != "cpu" else "cpu")
+Mode:  train
+BCE Loss: 0.17
+PRED Loss: 0.02
+Total Loss: 0.19
+AU-ROC: 0.98
+AU-PRC: 0.79
+AU-PRC Baseline: 0.07
+Accuracy: 0.94
+Precision: 0.52
+Recall: 0.90
+Specificity: 0.94
+NPV: 0.99
+ECE: 0.08
+MCE: 0.51
+
+========== Running zero_inputs: ing,demo ==========
+model type: posemb
+model pred: True
+Total Samples 94458
+Positive Samples 7364
+Negative Samples 87094
+Building dataset for  train
+Building dataset for  val
+Building dataset for  test
+total: short neg 30242
+total: short pos 2174
+total: long neg 29859
+total: long pos 2894
+Loading checkpoint from: snapshot_epoch19.pth
+Loaded model_state_dict from epoch 19
+======= TESTING ========
+Zero out: demo,ing
+test_only.py:284: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  ckpt = torch.load(ckpt_path, map_location="cuda" if cfg.device != "cpu" else "cpu")
+Mode:  train
+BCE Loss: 0.21
+PRED Loss: 0.06
+Total Loss: 0.27
+AU-ROC: 0.97
+AU-PRC: 0.77
+AU-PRC Baseline: 0.07
+Accuracy: 0.92
+Precision: 0.44
+Recall: 0.89
+Specificity: 0.92
+NPV: 0.99
+ECE: 0.10
+MCE: 0.62
+
+========== Running zero_inputs: static,stat ==========
+model type: posemb
+model pred: True
+Total Samples 94458
+Positive Samples 7364
+Negative Samples 87094
+Building dataset for  train
+Building dataset for  val
+Building dataset for  test
+total: short neg 30242
+total: short pos 2174
+total: long neg 29859
+total: long pos 2894
+Loading checkpoint from: snapshot_epoch19.pth
+Loaded model_state_dict from epoch 19
+======= TESTING ========
+Zero out: stat,static
+test_only.py:284: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  ckpt = torch.load(ckpt_path, map_location="cuda" if cfg.device != "cpu" else "cpu")
+Mode:  train
+BCE Loss: 0.13
+PRED Loss: 0.04
+Total Loss: 0.17
+AU-ROC: 0.97
+AU-PRC: 0.80
+AU-PRC Baseline: 0.07
+Accuracy: 0.95
+Precision: 0.60
+Recall: 0.84
+Specificity: 0.96
+NPV: 0.99
+ECE: 0.04
+MCE: 0.45
+
+========== Running zero_inputs: static,demo ==========
+model type: posemb
+model pred: True
+Total Samples 94458
+Positive Samples 7364
+Negative Samples 87094
+Building dataset for  train
+Building dataset for  val
+Building dataset for  test
+total: short neg 30242
+total: short pos 2174
+total: long neg 29859
+total: long pos 2894
+Loading checkpoint from: snapshot_epoch19.pth
+Loaded model_state_dict from epoch 19
+======= TESTING ========
+Zero out: demo,static
+test_only.py:284: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  ckpt = torch.load(ckpt_path, map_location="cuda" if cfg.device != "cpu" else "cpu")
+Mode:  train
+BCE Loss: 0.13
+PRED Loss: 0.04
+Total Loss: 0.17
+AU-ROC: 0.97
+AU-PRC: 0.80
+AU-PRC Baseline: 0.07
+Accuracy: 0.95
+Precision: 0.60
+Recall: 0.84
+Specificity: 0.96
+NPV: 0.99
+ECE: 0.04
+MCE: 0.45
+
+========== Running zero_inputs: stat,demo ==========
+model type: posemb
+model pred: True
+Total Samples 94458
+Positive Samples 7364
+Negative Samples 87094
+Building dataset for  train
+Building dataset for  val
+Building dataset for  test
+total: short neg 30242
+total: short pos 2174
+total: long neg 29859
+total: long pos 2894
+Loading checkpoint from: snapshot_epoch19.pth
+Loaded model_state_dict from epoch 19
+======= TESTING ========
+Zero out: demo,stat
+test_only.py:284: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  ckpt = torch.load(ckpt_path, map_location="cuda" if cfg.device != "cpu" else "cpu")
+Mode:  train
+BCE Loss: 0.13
+PRED Loss: 0.04
+Total Loss: 0.17
+AU-ROC: 0.97
+AU-PRC: 0.80
+AU-PRC Baseline: 0.07
+Accuracy: 0.95
+Precision: 0.60
+Recall: 0.84
+Specificity: 0.96
+NPV: 0.99
+ECE: 0.04
+MCE: 0.45
+
+========== LTMO tests completed ==========

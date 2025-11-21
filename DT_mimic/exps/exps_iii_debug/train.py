@@ -18,7 +18,6 @@ from IPython import embed
 import torch
 import torch.nn as nn
 
-import torch
 
 def peel_last_step_as_target(x, attention_mask, last_nonpad_idx, pad_value=0.0):
     """
@@ -57,6 +56,7 @@ def peel_last_step_as_target(x, attention_mask, last_nonpad_idx, pad_value=0.0):
 
     return x_mod, mask_mod, y
 
+
 def peel_last_step_from_list(tensor_list, attention_mask, last_nonpad_idx, pad_value=0.0):
     """
     tensor_list: list of (B, T, D_k)
@@ -69,7 +69,6 @@ def peel_last_step_from_list(tensor_list, attention_mask, last_nonpad_idx, pad_v
         out_list.append(xi_mod)
         ys.append(y.unsqueeze(1))
     return out_list, mask_mod, ys
-
 
 class SoftF1Loss(nn.Module):
     """
@@ -122,7 +121,6 @@ def build_model(datacfg):
         model = model.cuda()
     optimizer = optim.AdamW(model.parameters(), lr=cfg.lrn_rate)
     bce_loss = nn.BCEWithLogitsLoss()
-    # f1_loss = SoftF1Loss()
     l2_loss = nn.MSELoss()
     return model, evaluation, optimizer, bce_loss, l2_loss
 
@@ -171,30 +169,35 @@ def train(model, evaluation, optimizer, logit_loss, l2_loss, datacfg, train_load
         for step, batch in enumerate(tqdm(train_loader)):
 
             # optimizer.zero_grad()
-            meds, chart, out, proc, date, ing, stat_train, demo_train, Y_train, key_padding_mask, buckets, last_nonpad_idx = batch
-            meds = meds.cuda()
-            chart = chart.cuda()
-            out = out.cuda()
-            proc = proc.cuda()
-            date = date.cuda()
-            ing = ing.cuda()
+            # meds, chart, out, proc, date, ing, stat_train, demo_train, Y_train, key_padding_mask, buckets = batch
+            # meds, chart, out, stat_train, demo_train, Y_train, key_padding_mask, buckets = batch
+            meds, chart, out, stat_train, demo_train, Y_train, key_padding_mask, buckets, last_nonpad_idx = batch
+            meds = torch.log(meds.cuda() + 1)
+            chart = torch.log(chart.cuda() + 1)
+            out = torch.log(out.cuda() + 1)
+            #meds = meds.cuda()
+            #chart = chart.cuda()
+            #out = out.cuda()
+            # proc = proc.cuda()
+            # date = date.cuda()
+            # ing = ing.cuda()
             stat_train = stat_train.cuda()
             demo_train = demo_train.cuda()
             Y_train = Y_train.cuda()
             key_padding_mask = key_padding_mask.cuda()
             last_nonpad_idx = last_nonpad_idx.cuda()
 
-            # bs, padded_seqlen = meds.shape[0], meds.shape[1]
-            input_list, key_padding_mask, gt_preds = peel_last_step_from_list([meds, chart, out, proc, date, ing], key_padding_mask, last_nonpad_idx)
+            input_list, key_padding_mask, gt_preds = peel_last_step_from_list([meds, chart, out], key_padding_mask, last_nonpad_idx)
 
             if cfg.model.pred:
                 output, logits, preds = model(
-                    input_list[0], input_list[1], input_list[2], input_list[3], input_list[4], input_list[5], stat_train, demo_train, key_padding_mask
+                    input_list[0], input_list[1], input_list[2], stat_train, demo_train, key_padding_mask
                 )
 
             else:
                 output, logits, preds = model(
-                    meds, chart, out, proc, date, ing, stat_train, demo_train, key_padding_mask
+                    #meds, chart, out, proc, date, ing, stat_train, demo_train, key_padding_mask
+                    meds, chart, out, stat_train, demo_train, key_padding_mask
                 )
 
             bs = meds.shape[0]
@@ -209,6 +212,7 @@ def train(model, evaluation, optimizer, logit_loss, l2_loss, datacfg, train_load
                     pred_loss += l2_loss(
                         pred, gt_pred
                     )
+                    # print("pred and gt", pred.shape, gt_pred.shape, gt_pred.min().item(), gt_pred.max().item(), pred.min().item(), pred.max().item(), pred_loss.item(), flush=True)
 
             loss = out_loss + pred_loss * cfg.model.pred_loss
             loss = loss / grad_accum_steps
@@ -274,28 +278,34 @@ def val(model, val_loader, evaluation):
 
     for batch in tqdm(val_loader):
 
-        meds, chart, out, proc, date, ing, stat, demo, Y, key_padding_mask, buckets, last_nonpad_idx = batch
-        meds = meds.cuda()
-        chart = chart.cuda()
-        out = out.cuda()
-        proc = proc.cuda()
-        date = date.cuda()
-        ing = ing.cuda()
+        #meds, chart, out, proc, date, ing, stat, demo, Y, key_padding_mask, buckets = batch
+        meds, chart, out, stat, demo, Y, key_padding_mask, buckets, last_nonpad_idx = batch
+        meds = torch.log(meds.cuda() + 1)
+        chart = torch.log(chart.cuda() + 1)
+        out = torch.log(out.cuda() + 1)
+        #meds = meds.cuda()
+        #chart = chart.cuda()
+        #out = out.cuda()
+        # proc = proc.cuda()
+        # date = date.cuda()
+        # ing = ing.cuda()
         stat = stat.cuda()
         demo = demo.cuda()
         Y = Y.cuda()
         key_padding_mask = key_padding_mask.cuda()
         last_nonpad_idx = last_nonpad_idx.cuda()
 
-        input_list, key_padding_mask, gt_preds = peel_last_step_from_list([meds, chart, out, proc, date, ing], key_padding_mask, last_nonpad_idx)
+        input_list, key_padding_mask, gt_preds = peel_last_step_from_list([meds, chart, out], key_padding_mask, last_nonpad_idx)
 
         if cfg.model.pred:
             output, logits, preds = model(
-                input_list[0], input_list[1], input_list[2], input_list[3], input_list[4], input_list[5], stat, demo, key_padding_mask,
+                input_list[0], input_list[1], input_list[2], stat, demo, key_padding_mask
             )
+
         else:
             output, logits, preds = model(
-                meds, chart, out, proc, date, ing, stat, demo, key_padding_mask
+                #meds, chart, out, proc, date, ing, stat, demo, key_padding_mask
+                meds, chart, out, stat, demo, key_padding_mask
             )
 
         if cfg.model.pred:
@@ -332,28 +342,34 @@ def test(model, test_loader, evaluation):
     model.eval()
 
     for step, batch in enumerate(tqdm(test_loader)):
-        meds, chart, out, proc, date, ing, stat, demo, Y, key_padding_mask, buckets, last_nonpad_idx = batch
-        meds = meds.cuda()
-        chart = chart.cuda()
-        out = out.cuda()
-        proc = proc.cuda()
-        date = date.cuda()
-        ing = ing.cuda()
+        #meds, chart, out, proc, date, ing, stat, demo, Y, key_padding_mask, buckets = batch
+        meds, chart, out, stat, demo, Y, key_padding_mask, buckets, last_nonpad_idx = batch
+        meds = torch.log(meds.cuda() + 1)
+        chart = torch.log(chart.cuda() + 1)
+        out = torch.log(out.cuda() + 1)
+        #meds = meds.cuda()
+        #chart = chart.cuda()
+        #out = out.cuda()
+        # proc = proc.cuda()
+        # date = date.cuda()
+        # ing = ing.cuda()
         stat = stat.cuda()
         demo = demo.cuda()
         Y = Y.cuda()
         key_padding_mask = key_padding_mask.cuda()
         last_nonpad_idx = last_nonpad_idx.cuda()
 
-        input_list, key_padding_mask, gt_preds = peel_last_step_from_list([meds, chart, out, proc, date, ing], key_padding_mask, last_nonpad_idx)
+        input_list, key_padding_mask, gt_preds = peel_last_step_from_list([meds, chart, out], key_padding_mask, last_nonpad_idx)
 
         if cfg.model.pred:
             output, logits, preds = model(
-                input_list[0], input_list[1], input_list[2], input_list[3], input_list[4], input_list[5], stat, demo, key_padding_mask,
+                input_list[0], input_list[1], input_list[2], stat, demo, key_padding_mask
             )
+
         else:
             output, logits, preds = model(
-                meds, chart, out, proc, date, ing, stat, demo, key_padding_mask
+                #meds, chart, out, proc, date, ing, stat, demo, key_padding_mask
+                meds, chart, out,  stat, demo, key_padding_mask
             )
 
         if cfg.model.pred:
@@ -395,6 +411,7 @@ if __name__ == "__main__":
     print("seed:", cfg.seed)
     args = parse_args()
 
+
     print("Config:")
     for key, value in cfg.items():
         print(f"{key}: {value}")
@@ -407,8 +424,8 @@ if __name__ == "__main__":
         from model_rnn import DTmodel
     elif args.type == "lstm":
         from model_lstm import DTmodel
-    else:
-        from model import DTmodel
+    #else:
+    #    from model import DTmodel
     print("model type:", args.type)
     print("model pred:", cfg.model.pred)
 
@@ -417,28 +434,30 @@ if __name__ == "__main__":
         cfg.med_flag
         + cfg.chart_flag
         + cfg.out_flag
-        + cfg.proc_flag
-        + cfg.date_flag
-        + cfg.ing_flag
+        # + cfg.proc_flag
+        # + cfg.date_flag
+        # + cfg.ing_flag
     )
     print("total modalities:", modalities)
     datacfg = data_config(cfg.data_icu, modalities, cfg.train_min_length, cfg.train_max_length, train=True)
     train_ids, val_ids, test_ids, labels = load_trainval_data()
 
-    print(train_ids[0])
+    print(train_ids[0]) #iv:[12574949, 31423742] #train 66875 iii:[19243, 219174] #train 42355
     train_dataset, val_dataset, eval_dataset = build_datasets(train_ids, val_ids, test_ids, labels, datacfg, cfg.root_dir)
     train_loader, val_loader, test_loader = build_dataloaders(
         train_dataset, val_dataset, eval_dataset, datacfg, train_ids, val_ids, test_ids,
     )
 
-    meds, chart, out, proc, date, ing, stat, _, _ = train_dataset[0]
+    meds, chart, out, stat, _, _ = train_dataset[0]
+    #meds, chart, out, proc, date, ing, stat, _, _ = train_dataset[0]
     datacfg.stat_vocab_size = stat.shape[-1]
-    datacfg.proc_vocab_size = proc.shape[-1]
+    #datacfg.proc_vocab_size = proc.shape[-1]
     datacfg.med_vocab_size = meds.shape[-1]
     datacfg.out_vocab_size = out.shape[-1]
     datacfg.chart_vocab_size = chart.shape[-1]
-    datacfg.date_vocab_size = date.shape[-1]
-    datacfg.ing_vocab_size = ing.shape[-1]
+    #datacfg.date_vocab_size = date.shape[-1]
+    #datacfg.ing_vocab_size = ing.shape[-1]
+
 
     model, evaluation, optimizer, logit_loss, l2_loss = build_model(datacfg=datacfg)
 
