@@ -1,3 +1,5 @@
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.18224616.svg)](https://doi.org/10.5281/zenodo.18224616)
+
 ## Directory
 
 ```text
